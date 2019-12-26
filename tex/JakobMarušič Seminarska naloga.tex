@@ -1,4 +1,4 @@
-\documentclass[a4paper,12pt]{report}
+\documentclass[a4paper,11pt]{report}
 \usepackage[slovene]{babel}
 \usepackage{listings}
 \usepackage{graphicx}
@@ -45,22 +45,39 @@ V seminarski nalogi, ki je nastala v okviru predmeta Tehnologija upravljanja pod
 
 \chapter{Način testiranja}
 \section{Izbrani SUPB}
-Testiranje bom izvajal v treh prosto dostopnih SQL SUPB-jih. 
-Izbrane SUPB-je sem izbral zaradi svoje dostopnosti in razširjenosti med razvijalci in uporabniki informacijskih sistemov.
+Testiranje se bo izvajalo na treh prosto dostopnih podatkovnih bazah: MySQL, PostgreSQL in Micorsoft SQL Server.
+\\\\
+Vse tri podatkovne baze se bodo izvajale istočasno na Dockerju.
 
-\paragraph{MySQL} je bila v decembru 2019, po podatkih \textit{db-engines.com}, druga najbolj uporobljena podatkovna baza z rezultatom 1275.67 točk. 
-Je brezplačna odprtokodna rešitev, ki jo razvija podjetje Oracle. MySQL je relacijska podatkovna baza napisana v programskem jeziku C in C++.
+\subsection{Zagon Docker slik}
 
-\paragraph{PostgreSQL} je bila v decembru 2019, po podatkih \textit{db-engines.com}, na 4. mestu popularnosti z rezultatom 503.37. 
-Je brezplačna odprtokodna rešitev, za razvoj skrbi PostgreSQL Global Development Group. PostgreSQL je objetna podatkovna baza napisana v programskem jeziku C.
+\subsection{MySql}
+\begin{lstlisting}
+docker run --name TUP-sem-mysql -p 7202:3306 -e 
+        MYSQL_ROOT_PASSWORD=root -d mysql:latest
+\end{lstlisting}
 
-\paragraph{Microsoft SQL Server} je bila v decembru 2019, po podatkih \textit{db-engines.com}, na 3. mestu popularnosti z rezultatom 1096.20.
-MS SQL Server je izdelek, ki ga razvija Microsoft in ni odprtokodne narave. MS SQL Server je relacijska podatkovna baza napisana v programskem jeziku C in C++.
+Baza je dostopna na naslovu http://localhost:7202
 
-\section{Način namestitve}
-Za zagotovitev čim primerljivejših rezultatov so vse baze nameščene kot docker slike na operacijskem sistemu Windows 10 PRO. 
-Docker in docker slike podatkovnih baz so nameščene po navodilih in priporočilih proizvajalcev, nameščene so bile zadnje verzije, ki so bile
-na voljo 18. decmebra 2019.
+\subsection{PostgreSQL}
+\begin{lstlisting}
+docker run --name tup-sem-postgres 
+      -e POSTGRES_USER=root -e POSTGRES_PASSWORD=root 
+      -p 7200:5432 -d postgres
+\end{lstlisting}
+   
+Baza je dostopna na naslovu http://localhost:7200
+
+\subsection{Microsoft SQL Server}
+\begin{lstlisting}
+docker run -e 'ACCEPT_EULA=Y' --name tup-sem-mssql 
+   -e 'SA_PASSWORD=root_ROOT' -p 7201:1433 
+   -d mcr.microsoft.com/mssql/server:2017-CU8-ubuntu
+\end{lstlisting}
+   
+Baza je dostopna na naslovu http://localhost:7201.
+
+
 
 \section{Način poganjanja podatkovne baze}
 Podatkovna baza je bila nameščena in se je izvajala na računalniku s sledečimi specifikacijami:
@@ -82,28 +99,43 @@ Podatkovna baza je bila nameščena in se je izvajala na računalniku s sledeči
         \hline
         Verzija MySQL docker slike \footnote{https://hub.docker.com/\_/mysql} & 8.0.18 \\
         \hline
-        Verzija PostgreSQL docker slike & \\
+        Verzija PostgreSQL docker slike & 12.1\\
         \hline
-        Verzija MS SQL Server docker slike & \\
+        Verzija MS SQL Server docker slike & 2017\\
         \hline
     \end{tabular}
 \end{center}
 \paragraph{}
-V času testiranja na sistemu niso bile pognane drugi docker vmesniki ali drugi programi, ki bi lahko znatno vplivali na performanco sistema.
 
-\chapter{Priprava podatkovnih baz}
+\section{Način točkovanja testiranja in vrste testov}
 
-\section{Namestitev Docker slik}
-\subsection{MySql}
-\begin{lstlisting}
-docker run --name TUP-seminar-mysql -p 52000:3306 -e 
-        MYSQL_ROOT_PASSWORD=root -d mysql:latest
-\end{lstlisting}
+Vsak test se točkuje z določenim število točk pri čemer je maksimalno število točk določeno po ključu, kjer je glavni faktor pogostost izvajanja določene operacije realnem svetu \textit{(primer: zdravstveni dom)}.
+\\\\
+Testira se vse vidike operacij nad podatki podatkovne baze, katere izvajamo v okviru \textit{CRUD (Create, Read, Update, Delete)} operacij.
 
-Baza je dostopna na naslovu http://localhost:52000
+\begin{center}
+   \begin{tabular}{||c|c|c||}
+      \hline
+      \textbf{Operacija} & \textbf{Maksimalno število točk} & \textbf{Primer uporabe}\\
+      \hline
+      \hline
+      Vstavljanje\footnote{Vstavljanje velike količine podatkov} podatkov & 25 & migracija podatkov\\
+      Brisanje\footnote{Brisanje velike količine podatkov} podatkov & 25 & praznjenje tabel\\
+      Posodabljanje\footnote{Posodabljanje velike količine podatkov} podatkov & 50 & spremeba KZZ \\
+      Branje, analiza podatkov & \(4 \cdot 50 = 200\) & statistika\\
+      \hline
+   \end{tabular}
+\end{center}
 
-\section{Podatkovna baza}
-\subsection{Konceptualni model podatkovne baze}
+\section{Način izvedbe testov in določitve točk}
+Pri vsakem testu, ki se bo izvedel večkrat, bomo po definiranem ključu določili zmagovalca, ki v dani kategoriji dobil maksimalno število točk. Naslednji dve podatkovni bazi pa bosta od maksimalnega števila točk dobila odbitek, ki je enak odstotku razlike med lastnim rezultatom in rezultatom zmagovalca kategorije. 
+\\\\
+V zaključku raziskave se bodo točke seštele in tako objektivno določile performančnega zmagovalca testov. Vseeno pa so točke podeljene zgolj informativne narave, saj se izkaže, da pri izbiri pravega SUPB-ja ni pomembna zgolj performanca, temveč tudi izbira posameznika, naj si bo naročnika, upravljalca ali programerja podatkovne baze. Več o tem sledi v zaključku naloge. 
+
+\chapter{Podatkovna baza - zdravstveni dom}
+
+
+\section{Konceptni model}
 Podatkovna baza za potrebe testiranja je podatkovna baza zdravstvenega doma, ki se je uporabljala pri 3. domači nalogi.
 Podatkovna baza je razdeljena na 6 tabel in ima skupno xx vrstic.
 
@@ -129,503 +161,131 @@ Podatkovna baza je razdeljena na 6 tabel in ima skupno xx vrstic.
     \end{tabular}
 \end{center}
 
- \section*{Naloga (a)}
+\section{Fizični model}
+\subsection{MySQL}
+\begin{figure}[htb]
+   \noindent\includegraphics[width=\linewidth]{./pics/fizicni-mysql.png}
+   \caption{Fizični model podatkovne baze za MySQL}
+\end{figure}
+Skripta za ustvarjanje podatkovne baze je shranjena v datoteki \textit{\underline{./sql-skripte/mysql-init.sql}}.
 
-\paragraph{Navodila}
-\begin{em}
-  V relacije preslikajte s pomočjo orodja Power Designer (Generate physical model), kjer iz slike dobljenega logičnega modela prepišete strukturo relacij, npr. Relacija(A, B, \#C).
-\end{em}
+\subsection{PostgreSQL}
+\begin{figure}[htb]
+   \noindent\includegraphics[width=\linewidth]{./pics/fizicni-postgres.png}
+   \caption{Fizični model podatkovne baze za PostgreSQL}
+\end{figure}
+Skripta za ustvarjanje podatkovne baze je shranjena v datoteki \textit{\underline{./sql-skripte/postgres-init.sql}}.
 
+\subsection{Microsoft SQL Server}
+\begin{figure}[htb]
+   \noindent\includegraphics[width=\linewidth]{./pics/fizicni-mssql.png}
+   \caption{Fizični model podatkovne baze za MS SQL Server}
+\end{figure}
+Skripta za ustvarjanje podatkovne baze je shranjena v datoteki \textit{\underline{./sql-skripte/mssql-init.sql}}.
+
+\chapter{Testiranje}
+
+\section{Kreiranje podatkovne baze}
+
+\section{Vstavljanje (velike količine) zapisov v podatkovno bazo}
+
+V podatkovno bazo se je vstavilo skupaj xxx zapisov. Vstavljanje je potekalo prek Python skripte filanje.py po postopku: 
+
+\begin{enumerate}
+   \item Iz csv (coma seperated values) datoteke je program prebral vrstico, jo razdeli in pretvoril v pravilen zapis spremelnjivke (s pomočjo vgrajenih ali pomožnih funkcij)
+   \item Program shrani trenutni sistemski čas
+   \item Program izvede INSERT
+   \item Program od trenutnega sistemskega časa odšteje sistemski čas iz točke 3 in ga prišeje k števcu skupnega časa 
+   \item Program se premakne na naslednjo vrstico csv datoteke
+   \item Ko program obdela vse datoteke, funkcija vrne celoten seštevek časov izvajanja
+\end{enumerate}
+Test se je avomatsko izvedel desetkrat na vseh treh testnih bazah desetkrat v vrstnem redu: Microsoft SQL Server, MySql in PostgreSQL. Po vrsti je program polnil tabele:
+\begin{enumerate}
+   \item Pacient
+   \item Oddelek
+   \item Obravnava
+   \item MKB\_koda
+   \item Diagnoza
+   \item Preiskava
+   \item Izvid
+\end{enumerate}
+
+Po polnjenju vseh treh podatkovnih baz je program podatkovne baze izpraznil pri čemer je bil uporabljen ukaz \textit{DELETE * FROM |ime tabele| }. 
+\\\\
+Pri obdelavi rezultatov se najboljši in najslabši čas nista upoštevala, iz ostalih pa se je izračunalo povprečje.
 
 \begin{center}
-  \begin{tabular}{ ||p{15cm}|| }
-    \hline
-    Relacije \\
-    \hline \hline
-    kraj(\underline{postna\_stevilka}, kraj)\\ \\
-    naslov(\underline{naslovID}, \#postna\_stevilka, ulica, hisna\_stevilka)\\ \\
-    pacient(\underline{stevilka\_KZZ}, \#naslovID, ime, priimek, rojstni\_datum, spol)\\ \\
-    diagnoza\_pacient(\underline{\#stevilka\_KZZ, \#id\_diagnoze}, stevilka\_diagnoze)\\ \\
-    diagnoza(\underline{id\_diagnoze}, slovenska\_kvalifikacija, angleska\_kvalifikacija, mednarodna\_kvalifikacija)\\ \\
-    obravnava(\underline{stevilka\_obravnave}, \#stevilka\_obravnave)\\ \\
-    cakalna\_vrsta(\underline{\#stevilka\_obravnave, \#stevilka\_oddelka}, datum\_vpisa, cas\_vpisa, predviden\_datum\_sprejema, predviden\_cas\_sprejema)\\
-    oddelek(\underline{stevilka\_oddelka}, ime\_oddelka)\\ \\
-    izvid\_preiskave(\underline{stevilka\_preiskave}, \#id\_samoplacnika, \#sifra\_preiskave, \#stevilka\_obravnave, datum\_šreiskave, cas\_preiskave, rezultat\_preiskave)\\
-    samoplacnik(\underline{id\_samoplacnika})\\ \\
-    preiskava(\underline{sifra\_preiskave}, ime preiskave, min\_dopustni\_interval, max\_dopustni\_interval, cena\_za\_samoplacnike)\\ \\
-    referencna\_vrednost\_moski(\underline{sifra\_preiskave}, ime\_preiskave, min\_dopustni\_interval, max\_dopustni\_interval, cena\_za\_samoplacnike, min\_referencna\_vrednost, max\_referencna\_vrednost)\\ \\
-    referencna\_vrednost\_zenske(\underline{sifra\_preiskave}, ime\_preiskave, min\_dopustni\_interval, max\_dopustni\_interval, cena\_za\_samoplacnike, min\_referencna\_vrednost, max\_referencna\_vrednost)\\ \\
-    \hline
-  \end{tabular}
-\end{center}
-
-\section*{Naloga (b)}
-\paragraph{Navodila}
-\begin{em}
-  V relacije preslikajte ročno, po navodilih in priporočilih s predavanj.
-\end{em}
-
-\paragraph{}
-  \begin{center}
-    \begin{tabular}{ ||p{15cm}|| }
+   \begin{tabular}{||c|c|c|c||}
       \hline
-      Relacije \\
-      \hline \hline
-      kraj(\underline{postna\_stevilka}, kraj)\\ \\
-      naslov(\underline{naslovID}, \#postna\_stevilka, ulica, hisna\_stevilka)\\ \\
-      pacient(\underline{stevilka\_KZZ}, \#naslovID, ime, priimek, rojstni\_datum, spol)\\ \\
-      diagnoza\_pacient(\underline{\#stevilka\_KZZ, \#id\_diagnoze}, stevilka\_diagnoze)\\ \\
-      diagnoza(\underline{id\_diagnoze}, slovenska\_kvalifikacija, angleska\_kvalifikacija, mednarodna\_kvalifikacija)\\ \\
-      obravnava(\underline{stevilka\_obravnave}, \#stevilka\_obravnave)\\ \\
-      cakalna\_vrsta(\underline{\#stevilka\_obravnave, \#stevilka\_oddelka}, datum\_vpisa, cas\_vpisa, predviden\_datum\_sprejema, predviden\_cas\_sprejema)\\
-      oddelek(\underline{stevilka\_oddelka}, ime\_oddelka)\\ \\
-      izvid\_preiskave(\underline{stevilka\_preiskave}, \#id\_samoplacnika, \#sifra\_preiskave, \#stevilka\_obravnave, datum\_šreiskave, cas\_preiskave, rezultat\_preiskave)\\
-      samoplacnik(\underline{id\_samoplacnika})\\ \\
-      preiskava(\underline{sifra\_preiskave}, ime preiskave, min\_dopustni\_interval, max\_dopustni\_interval, cena\_za\_samoplacnike, min\_referencna\_vrednost\_moski, max\_referencna\_vrednost\_moski, min\_referencna\_vrednost\_zenska, max\_referencna\_vrednost\_zenska)\\ \\
-      \hline
-  \end{tabular}
-\end{center}
-
-\pagebreak
-
-\section*{Naloga (c)}
-\paragraph{Navodila}
-\begin{em}
-  Primerjajte dobljeni množici relacij, naštejte razlike in jih poskušajte razložiti (po možnosti tudi odpraviti s spremembami v gradnikih konceptualnega modela).
-\end{em}
-
-\paragraph{}
-Edina razlika se pojavi pri pretvorbi hierhije iz konceptnega model v logični. Pri ročni pretvorbi sem se odločil za združevanje entitetnih tipov, medtem, ko je avtomatska pretvorba v PowerDesigner-ju ohranila vse tri tabele, akr povzroči redundanco v tabelah \textit{referencna\_vrednost\_moski} in \textit{referencna\_vrednost\_zenska}.
-
-\paragraph{}
-Ker pri preslikavi hierhije ne obstaja določen postopek, vendar jih je več, se konceptnega modela (razen, da bi hierhijo popolnoma odstranili) ne da spremeniti do tega, da bi logična modela bila enaka.
-
-
-\section*{Naloga (d)}
-\paragraph{Navodila}
-\begin{em}
-  Dobljene relacije z orodjem PowerDesigner pretvorite v SQL skripto (za MySQL), kreirajte tabele in jih napolnite (lahko avtomatsko).
-\end{em}
-
-\paragraph{}\mbox{}
-\begin{lstlisting}[language=SQL]
-   create table diagnoza
-   (  "id diagnoze"        int not null,
-      "slovenska kvalifikacija" varchar(50),
-      "angleska kvalifikacija" varchar(50),
-      "mednarodna kvalifikacija" varchar(50),
-      primary key ("id diagnoze")
-   );
-   create table "diagnoza pacient"
-   (
-      "stevilka KZZ"       int not null,
-      "id diagnoze"        int not null,
-      "stevilka diagnoze"  int not null,
-      primary key ("stevilka KZZ", "id diagnoze")
-   );
-   create table "izvid preiskave"
-   (
-      "datum preiskave"    date,
-      "cas preiskave"      time,
-      "rezultat preiskave" float(5),
-      "stevilka izvida"    int not null,
-      "id samoplacnika"    int,
-      "sifra preiskave"    int not null,
-      "stevilka obravnave" int,
-      primary key ("stevilka izvida")
-   );
-   create table kraj
-   (
-      "postna stevilka"    int not null,
-      kraj                 varchar(20),
-      primary key ("postna stevilka")
-   );
-   create table naslov
-   (
-      naslovID             int not null,
-      "postna stevilka"    int not null,
-      ulica                varchar(20),
-      "hisna stevilka"     varchar(5),
-      primary key (naslovID)
-   );
-   create table obravnava
-   (
-      "stevilka obravnave" int not null,
-      "stevilka KZZ"       int not null,
-      primary key ("stevilka obravnave")
-   );
-   create table oddelek
-   (
-      "stevilka oddelka"   int not null,
-      "ime oddelka"        varchar(50),
-      primary key ("stevilka oddelka")
-   );
-   create table pacient
-   (
-      "stevilka KZZ"       int not null,
-      naslovID             int not null,
-      ime                  varchar(20),
-      priimek              varchar(50),
-      "rojstni datum"      date,
-      spol                 char(1),
-      primary key ("stevilka KZZ")
-   );
-   create table preiskava
-   (
-      "sifra preiskave"    int not null,
-      "ime preiskave"      varchar(20),
-      "min dopustni interval" float(5),
-      "max dopustni interval" float(5),
-      "cena za samoplacnike" float(10),
-      primary key ("sifra preiskave")
-   );
-   create table "referencna vrednost moski"
-   (
-      "sifra preiskave"    int not null,
-      "ime preiskave"      varchar(20),
-      "min dopustni interval" float(5),
-      "max dopustni interval" float(5),
-      "cena za samoplacnike" float(10),
-      "min referencna vrednost" float(4),
-      "max referencna vrednost" float(4),
-      primary key ("sifra preiskave")
-   );
-   create table "referencna vrednost zenske"
-   (
-      "sifra preiskave"    int not null,
-      "ime preiskave"      varchar(20),
-      "min dopustni interval" float(5),
-      "max dopustni interval" float(5),
-      "cena za samoplacnike" float(10),
-      "min referencni interval" float(4),
-      "max referencni interval" float(4),
-      primary key ("sifra preiskave")
-   );
-   create table samoplacnik
-   (
-      "id samoplacnika"    int not null,
-      primary key ("id samoplacnika")
-   );
-   create table "cakalna vrsta"
-   (
-      "stevilka obravnave" int not null,
-      "stevilka oddelka"   int not null,
-      "datum vpisa"        date,
-      "cas vpisa"          time,
-      "predviden datum sprejema" date,
-      "predviden cas sprejema" time,
-      primary key 
-      ("stevilka obravnave", "stevilka oddelka")
-   );
-   
-   alter table "diagnoza pacient" 
-      add constraint FK_ima 
-      foreign key ("stevilka KZZ")
-      references pacient ("stevilka KZZ") 
-      on delete restrict on update restrict;
-   
-   alter table "diagnoza pacient" 
-      add constraint "FK_je definirana z" 
-      foreign key ("id diagnoze")
-      references diagnoza ("id diagnoze") 
-      on delete restrict on update restrict;
-   
-   alter table "izvid preiskave" 
-      add constraint FK_definira 
-      foreign key ("sifra preiskave")
-      references preiskava ("sifra preiskave") 
-      on delete restrict on update restrict;
-   
-   alter table "izvid preiskave" 
-      add constraint "FK_pripada obravnavi" 
-      foreign key ("stevilka obravnave")
-      references obravnava ("stevilka obravnave") 
-      on delete restrict on update restrict;
-   
-   alter table "izvid preiskave" 
-      add constraint "FK_se prijavlja" 
-      foreign key ("id samoplacnika")
-      references samoplacnik ("id samoplacnika") 
-      on delete restrict on update restrict;
-   
-   alter table naslov 
-      add constraint "FK_se nahaja v" 
-      foreign key ("postna stevilka")
-      references kraj ("postna stevilka") 
-      on delete restrict on update restrict;
-   
-   alter table obravnava 
-      add constraint "FK_je obravnavan" 
-      foreign key ("stevilka KZZ")
-      references pacient ("stevilka KZZ") 
-      on delete restrict on update restrict;
-   
-   alter table pacient 
-      add constraint FK_pripada 
-      foreign key (naslovID)
-      references naslov (naslovID) 
-      on delete restrict on update restrict;
-   
-   alter table "referencna vrednost moski" 
-      add constraint FK_referenca 
-      foreign key ("sifra preiskave")
-      references preiskava ("sifra preiskave") 
-      on delete restrict on update restrict;
-   
-   alter table "referencna vrednost zenske" 
-      add constraint FK_referenca2 
-      foreign key ("sifra preiskave")
-      references preiskava ("sifra preiskave") 
-      on delete restrict on update restrict;
-   
-   alter table "cakalna vrsta" 
-      add constraint "FK_je umescen" 
-      foreign key ("stevilka obravnave")
-      references obravnava ("stevilka obravnave") 
-      on delete restrict on update restrict;
-   
-   alter table "cakalna vrsta" 
-      add constraint "FK_pripada oddelku" 
-      foreign key ("stevilka oddelka")
-      references oddelek ("stevilka oddelka") 
-      on delete restrict on update restrict;
-   
-\end{lstlisting}
-
-\section*{Naloga (e)}
-\paragraph{Navodila}
-\begin{em}
-  Opišite pet (5) smiselnih netrivialnih operacij nad podanimi tabelami, ter jih implementirajte v obliki SQL poizvedb (vsaka nad najmanj dvema tabelama, vsaj 3 gnezdene ali agregatne poizvedbe).
-\end{em}
-
-\subsection*{Poizvedba 1}
-\paragraph{Opis poizvedbe}
-Poizvedba za vsakega izmed samoplačnikov v bazi izračuna skupno ceno izvedenih preiskav.
-
-\paragraph{SQL poizvedba}\mbox{}\\
-\begin{lstlisting}[language = SQL]
-select
-  id_samoplacnika,
-  sum(cena_za_samoplacnika)
-from izvid_preiskave
-join preiskava p on 
-  izvid_preiskave.sifra_preiskave = p.sifra_preiskave
-group by id_samoplacnika;
-\end{lstlisting}
-
-\pagebreak
-\subsection*{Poizvedba 2}
-\paragraph{Opis poizvedbe}
-Poizvedba prikaže osebne podatke vseh pacientov, ki so potrebni za pošiljanje izvidov po pošti.
-
-\paragraph{SQL poizvedba}\mbox{}\\
-\begin{lstlisting}[language = SQL]
-select
-    p.ime,
-    p.priimek,
-select
-    p.ime,
-    p.priimek,
-    n.ulica,
-    n.hisna_stevilka,
-    n.postna_stevilka
-from
-    pacient p
-inner join naslov n on
-    p.naslovID = n.naslovID;
-\end{lstlisting}
-
-\subsection*{Poizvedba 3}
-\paragraph{Opis poizvedbe}
-Poizvedba prikaže število pacientov, ki so ovrščeni na čakalno listo oddelka. Oddelki so razvrščeni od oddelka z najdaljšo čakalno vrsto do oddelka z najkrajšo.
-
-\paragraph{SQL poizvedba}\mbox{}\\
-\begin{lstlisting}[language = SQL]
-select
-  o.ime_oddelka as 'Ime oddelka',
-  count(c.stevilka_obravnave) as 'V cakalni vrsti'
-from
-   cakalna_vrsta c
-inner join oddelek o on 
-      c.stevilka_oddelka = o.stevilka_oddelka
-group by c.stevilka_oddelka
-order by count(c.stevilka_obravnave) DESC;
-\end{lstlisting}
-
-
-\subsection*{Poizvedba 4}
-\paragraph{Opis poizvedbe}
-Poizvedba za vsakega izmed obravnavanih pacientov prikaže število obravnav.
-
-\paragraph{SQL poizvedba}\mbox{}\\
-\begin{lstlisting}[language = SQL]
-select
-  p.stevilka_KZZ,
-  count(o.stevilka_KZZ)
-from pacient p
-inner join obravnava o on 
-      p.stevilka_KZZ = o.stevilka_KZZ
-group by o.stevilka_KZZ;
-\end{lstlisting}
-
-\subsection*{Poizvedba 5}
-\paragraph{Opis poizvedbe}
-Poizvedba za izbranega pacienta izpiše seznam diagnoz s slovensko kvalifikacijo. Diagnoze so urejene po številki diagnoze.
-
-\paragraph{SQL poizvedba}\mbox{}\\
-\begin{lstlisting}[language = SQL]
-select
-  p.stevilka_KZZ,
-  p.ime,
-  p.priimek,
-  dp.stevilka_diagnoze,
-  d.slovenska_kvalifikacija
-from diagnoza_pacient dp
-inner join diagnoza d on dp.id_diagnoze = d.id_diagnoze
-inner join pacient p on dp.stevilka_KZZ = p.stevilka_KZZ
-where p.stevilka_KZZ = :izbrani_pacient;
-\end{lstlisting}
-
-\chapter*{3. domača naloga}
-
-\section*{Naloga (a)}
-\paragraph{Navodila}
-Definirajte mehanizem, ki bo preprečeval, da bi pacientu v okviru ISTE obravnave ISTI test naredili več kot dvakrat.
-
-\paragraph{}\mbox{}
-\begin{lstlisting}[language = SQL]
-   DELIMITER $$
-
-   CREATE TRIGGER ista_obravnava
-   BEFORE INSERT
-   ON izvid
-   BEGIN
-
-      DECLARE @test int
-
-      SELECT @retVal = COUNT(vrednost) 
-      FROM izvid
-      WHERE st_obravnave = :obravnava 
-            AND ime_preiskave = :preiskava
-
-      IF (@retVal < 2 ) THEN
-      BEGIN
-          --DOVOLIMO IN VSTAVIMO NOV IZVID
-      END IF
-   
-   END $$
-
-\end{lstlisting}
-
-\section*{Naloga (b)}
-\paragraph{Navodila}
-Definirajte operacije (transakcije), ki jih je potrebno izvesti brez prekinjanja.
-\textit{Baza avtomatsko preveri ali vnos novega podatka ne krši primarnih in tujih ključev. Predvideva se, da so vsi oddelki, vrste preiskav in kode diagnoz v bazi že vnešeni}
-
-\paragraph{Dodajanje novega izvida 1}
-V kolikor obravnava še ni odprta za danega pacienta moramo kot del transakcije izvesti:
-\begin{enumerate}
-   \item Pacientu dodamo novo obravnavo na danem oddelku
-   \item Pacientu določimo nov izvid (rezultat preiskave)
-\end{enumerate}
-
-\paragraph{Dodajanje novega izvida 2}
-V kolikor pacient v bazi še ne obstaja moramo kot transkacijo izvesti:
-\begin{enumerate}
-   \item V bazo dodamo pacienta
-   \item Pacientu dodamo novo obravnavo na danem oddelku
-   \item Pacientu določimo nov izvid (rezultat preiskave)
-\end{enumerate}
-
-\paragraph{Dodajanje nove diagnoze k obravnavi 1}
-V kolikor obravnava še ni odprta (vnešena v bazo) moramo kot transakcijo (brez prekinitev) izvesti:
-\begin{enumerate}
-   \item V bazo dodamo obravnavo na danem oddelku za danega pacienta
-   \item Pacientu dodamo novo diagnozo za dano obravnavo
-\end{enumerate}
-
-\paragraph{Dodajanje nove diagnoze k obravnavi 2}
-V kolikor pacient v bazi še ne obstaja moramo kot transakcijo (brez prekinitev) izvesti:
-\begin{enumerate}
-   \item V bazo dodamo pacienta
-   \item V bazo dodamo obravnavo na danem oddelku za danega pacienta
-   \item Pacientu dodamo novo diagnozo za dano obravnavo
-\end{enumerate}
-
-\pagebreak
-\section*{Naloga (c)}
-\paragraph{Navodila}
-Naredite graf v Excelu, ki prikazuje 10 najpogostejših bolezni (z imeni) po oddelkih in po spolih.
-
-
-\section*{Naloga (d)}
-\paragraph{Navodila}
-Ugotovite razliko med MKB kodami in WHO ICD kodami (katere so tiste, ki jih drugi ne pozna), ter jih predstavite v Excelovi tabeli urejene glede na število pojavitev med diagnozami.
-
-\pagebreak
-\paragraph{Kode, ki so del WHO, niso del MKB}
-Tabela prikazuje kode, ki so del nabora kod WHO, vendar niso nabor kod MKB. \textit{Kode, ki med diagnozami nimajo vnosa niso navedene}:
-
-\begin{center}
-   \begin{tabular}{||c|r||}
-      \hline
-      WHO koda & Število diagnoz\\
+      \textbf{SUPB} & \textbf{Najboljši čas [s]} & \textbf{Najslabši čas [s]} & \textbf{Povprečje [s]} \\
       \hline
       \hline
-      N18.8 & 59\\
-      N18.0 & 20\\
-      T28.6 & 10\\
-      T28.7 & 7\\
-      R73.9 & 4\\
-      R50.0 & 4\\
-      T28.5 & 3\\
-      U80.1 & 2\\
-      N08.3 & 2\\
-      R73.0 & 1\\
-      E90 & 1\\
-      J99.0 & 1\\
-      H36.0 & 1\\
-      H82 & 1\\
-      G63.2 & 1\\
+      PostgreSQL & 512,716 & 520,791 & 515,921 \\
+      Microsoft SQL Server & 592,745 & 608,040 & 596,453 \\
+      MySQL & 619,255 & 630,775 & 623,806\\
       \hline
-
    \end{tabular}
 \end{center}
 
+\begin{figure}[htb]
+   \noindent\includegraphics[width=\linewidth]{./pics/vstavljanje001.png}
+   \caption{Primerjava "best, worst \& average" vstavljanja}
+\end{figure}
+
 \pagebreak
-\paragraph{Kode, ki so del MKB, niso del WHO}
-Tabela prikazuje 20 najpogostejših kod, ki se pojavljajo med diagnozami, ki so del nabora kod MKB, vendar niso nabor kod WHO. 
-Vseh kod, ki so del nabora MKB, vendar ne WHO, je 1146.\textit{Kode, ki med diagnozami nimajo vnosa niso navedene}:
+
+Iz rezultatov lahko vidimo, da je povprečje PostgreSQL-a ne le najboljše, ampak je celo za \textit{15 \%} 
+boljši od najboljšega časa naslednjega zasledovalca, tj. Microsoft SQL Server, in za \textit{20\%} od MySQL.
+\\\\
+V povprečju je sicer PostgreSQL potreboval približno 8 minut in pol, Microsoft SQL Server nekaj manj, MySql pa nekaj več kot 10 minut.
+\\\\
+Ob tem gre poudariti, da se je pri vseh uporabljal \textit{običajen INSERT} in ne kakšna posebna oblika vstavljanja velike količine podatkov (npr. \textit{BULK INSERT} pri Microsoft SQL Server).
+\\\\
+Iz zgoraj navedenih rezultatov se, kot je zapisano v sekciji 1.4.1, določi točke po naslednjem ključu:
 
 \begin{center}
-   \begin{tabular}{||c|r||}
+   \begin{tabular}{||c|c|c|c||}
       \hline
-      MKB koda & Število diagnoz\\
+      \textbf{SUPB} & Rezultat testiranja & Odstotek točk [\%] & Število točk\\
       \hline
       \hline
-      I48 & 1739\\
-      J96.0 & 1148\\
-      I50.0 & 972\\
-      F03 & 383\\
-      N40 & 287\\
-      X61 & 230\\
-      I69.4 & 224\\
-      E11.7 & 208\\
-      Z98.8 & 182\\
-      T42.4 & 180\\
-      J45.9 & 174\\
-      E14.9 & 151\\
-      T58 & 141\\
-      I69.3 & 135\\
-      J96.9 & 134\\
-      I25.1 & 132\\
-      I25.0 & 132\\
-      K70.3 & 130\\
-      E11.71 & 120\\
-      Z92.1 & 106\\
+      PostgreSQL & 515,921 & 100 & 25\\
+      Micorsoft SQL Server & 596,453 & 86,5 & 21,6\\
+      MySql & 623,806 & 82,7 & 20,7\\
       \hline
-
    \end{tabular}
 \end{center}
+
+\section{Brisanje (velike količine) podatkov iz podatkovne baze}
+Brisanje podatkov je potekalo avtomatsko z uporabo Python skripte \textit{filanje.py}. Testiranje se je izvedlo destkrat.
+\\\\
+
+Testiranje je potekalo po naslednjem postopku:
+\begin{enumerate}
+   \item Program za izvede ukaz s katerim pridobi imena vseh tabel v podatkovni bazi
+   \item Program za vsako izmed tabel izvede:
+      \item Program shrani trenutni sistemski čas
+      \item Program izvede ukaz \textit{DELETE FROM |ime-tabele|}
+      \item Program od trenutnega sistemskega časa odšteje shranjen čas
+   \item Program vrne seštevek vsote časov izvajanja funkcije brisanja podatkov
+\end{enumerate}
+
+Rezultati izračunani iz povprečja so naslednji:
+\begin{center}
+   \begin{tabular}{||c|c|c|c||}
+      \hline
+      \textbf{SUPB} & \textbf{Testiranje [ms]} & \textbf{Odstotek točk [\%] } & \textbf{Število točk}\\
+      \hline
+      \hline
+      Microsoft SQL Server & 1,087 & 100 & 25\\
+      PostgreSQL & 1,490 & 72,9 & 18,2\\
+      MySQL & 5,373 & 20,2 & 5,1\\
+      \hline
+   \end{tabular}
+\end{center}
+
+Iz zgornjih rezultatov lahko sklepamo, da je brisanje podatkov iz podatkovne baze veliko hitrejši postopek od vstavljanja.
+Ravno zaradi tega so relativne razlike med testiranimi SUPB-ji izjemno velike v primerjavi z razlikami pri vstavljanju, čeprav
+so absolutne razlike (predvsem med MS SQL Server in PostgreSQL) zanemarljive.
 
 \end{document}

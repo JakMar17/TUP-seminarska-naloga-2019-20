@@ -1,12 +1,12 @@
-PWD c:\Users\jakob\Documents\TUP\seminarska
+PWD c:\Users\jakob\Documents\TUP\seminarska\tex
 INPUT C:\Users\jakob\AppData\Local\MiKTeX\2.9\miktex\data\le\pdftex\pdflatex.fmt
-INPUT c:\Users\jakob\Documents\TUP\seminarska\JakobMarušič Seminarska naloga.tex
-OUTPUT c:\Users\jakob\Documents\TUP\seminarska\JakobMarušič Seminarska naloga.log
+INPUT c:\Users\jakob\Documents\TUP\seminarska\tex\JakobMarušič Seminarska naloga.tex
+OUTPUT c:\Users\jakob\Documents\TUP\seminarska\tex\JakobMarušič Seminarska naloga.log
 INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\report.cls
 INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\report.cls
-INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\size12.clo
-INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\size12.clo
-INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\cm\cmr12.tfm
+INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\size11.clo
+INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\size11.clo
+INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\cm\cmr10.tfm
 INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\tex\generic\babel\babel.sty
 INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\tex\generic\babel\babel.sty
 INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\tex\generic\babel\switch.def
@@ -40,9 +40,9 @@ INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\tex\latex\mdwtools\footno
 INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\tex\latex\mdwtools\footnote.sty
 INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\tex\latex\listings\lstlang1.sty
 INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\tex\latex\listings\lstlang1.sty
-INPUT c:\Users\jakob\Documents\TUP\seminarska\JakobMarušič Seminarska naloga.aux
-INPUT c:\Users\jakob\Documents\TUP\seminarska\JakobMarušič Seminarska naloga.aux
-OUTPUT c:\Users\jakob\Documents\TUP\seminarska\JakobMarušič Seminarska naloga.aux
+INPUT c:\Users\jakob\Documents\TUP\seminarska\tex\JakobMarušič Seminarska naloga.aux
+INPUT c:\Users\jakob\Documents\TUP\seminarska\tex\JakobMarušič Seminarska naloga.aux
+OUTPUT c:\Users\jakob\Documents\TUP\seminarska\tex\JakobMarušič Seminarska naloga.aux
 INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\tex\context\base\mkii\supp-pdf.mkii
 INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\tex\context\base\mkii\supp-pdf.mkii
 INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\tex\latex\epstopdf-pkg\epstopdf-base.sty
@@ -69,50 +69,73 @@ INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\tex\latex\pdftexcmds\pdft
 INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\tex\latex\pdftexcmds\pdftexcmds.sty
 INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\cm\cmr12.tfm
 INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\cm\cmcsc10.tfm
-INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\cm\cmr17.tfm
+INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\cm\cmr12.tfm
 INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\cm\cmr17.tfm
 INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\cm\cmbx12.tfm
-OUTPUT c:\Users\jakob\Documents\TUP\seminarska\JakobMarušič Seminarska naloga.pdf
+OUTPUT c:\Users\jakob\Documents\TUP\seminarska\tex\JakobMarušič Seminarska naloga.pdf
 INPUT C:\Users\jakob\AppData\Local\MiKTeX\2.9\pdftex\config\pdftex.map
 INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\cm\cmr17.tfm
 INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\cm\cmbx12.tfm
+INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\cm\cmbx10.tfm
+INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\cm\cmr17.tfm
 INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\cm\cmbx12.tfm
 INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\cm\cmbx12.tfm
-INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\cm\cmti12.tfm
+INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\cm\cmbx12.tfm
+INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\cm\cmti10.tfm
 INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\cm\cmr8.tfm
 INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\cm\cmr6.tfm
-INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\cm\cmmi12.tfm
+INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\cm\cmmi10.tfm
 INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\cm\cmmi8.tfm
 INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\cm\cmmi6.tfm
 INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\cm\cmsy10.tfm
 INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\cm\cmsy8.tfm
 INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\cm\cmsy6.tfm
-INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\cm\cmbx12.tfm
+INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\cm\cmr9.tfm
+INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\cm\cmmi9.tfm
+INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\cm\cmsy9.tfm
 INPUT pics\konceptni.png
 INPUT .\pics\konceptni.png
 INPUT .\pics\konceptni.png
 INPUT .\pics\konceptni.png
 INPUT .\pics\konceptni.png
-INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\omlcmr.fd
-INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\omlcmr.fd
-INPUT c:\Users\jakob\Documents\TUP\seminarska\JakobMarušič Seminarska naloga.aux
+INPUT pics\fizicni-mysql.png
+INPUT .\pics\fizicni-mysql.png
+INPUT .\pics\fizicni-mysql.png
+INPUT .\pics\fizicni-mysql.png
+INPUT .\pics\fizicni-mysql.png
+INPUT pics\fizicni-postgres.png
+INPUT .\pics\fizicni-postgres.png
+INPUT .\pics\fizicni-postgres.png
+INPUT .\pics\fizicni-postgres.png
+INPUT .\pics\fizicni-postgres.png
+INPUT pics\fizicni-mssql.png
+INPUT .\pics\fizicni-mssql.png
+INPUT .\pics\fizicni-mssql.png
+INPUT .\pics\fizicni-mssql.png
+INPUT .\pics\fizicni-mssql.png
+INPUT pics\vstavljanje001.png
+INPUT .\pics\vstavljanje001.png
+INPUT .\pics\vstavljanje001.png
+INPUT .\pics\vstavljanje001.png
+INPUT .\pics\vstavljanje001.png
+INPUT c:\Users\jakob\Documents\TUP\seminarska\tex\JakobMarušič Seminarska naloga.aux
+INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmbx10.pfb
+INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmbx10.pfb
 INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmbx12.pfb
 INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmbx12.pfb
 INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmcsc10.pfb
 INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmcsc10.pfb
-INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmmi12.pfb
-INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmmi12.pfb
 INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmr10.pfb
 INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmr10.pfb
 INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmr12.pfb
 INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmr12.pfb
-INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmr17.pfb
-INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmr17.pfb
-INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmr7.pfb
-INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmr7.pfb
+INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmr6.pfb
+INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmr6.pfb
 INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmr8.pfb
 INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmr8.pfb
+INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmr9.pfb
+INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmr9.pfb
 INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmsy10.pfb
 INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmsy10.pfb
-INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmti12.pfb
-INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmti12.pfb
+INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmti10.pfb
+INPUT C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmti10.pfb
