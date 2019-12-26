@@ -62,7 +62,7 @@ seznam_kod = 'csv/kode.csv'
 seznam_diagnoz = 'csv/diagnoza.csv'
 
 def filanjeObravnav(stevec):
-    obravnava = 26326
+    obravnava = 90000
     i = 0
     while i < stevec:
         obravnava += 1
@@ -74,6 +74,8 @@ def filanjeObravnav(stevec):
                 zapisi(seznam_obravnav, [kzz, obravnava, oddelek])
                 print(i)
                 i += 1
+
+filanjeObravnav(10000)
 
 def filanjeIzvidov(stevec):
     i = 0
@@ -88,13 +90,13 @@ def filanjeIzvidov(stevec):
             zapisi(seznam_izvidov, [obravnava, datum_ura, parameter, vrednost])
             print(i)
             i+=1
-filanjeIzvidov(10000)
+#filanjeIzvidov(10000)
 
 
 def filanjeDiagnoz(stevec):
     i = 0
     while i < stevec:
-        obravnava = nakljucna(30000, 53502)
+        obravnava = nakljucna(30000, 63502)
         if iskanje(obravnava, 1, seznam_obravnav):
             stDiagnoze = stDiagnoz(obravnava, 0, seznam_diagnoz)
             diagnoza = nakljucna(2, 18955)
@@ -106,4 +108,4 @@ def filanjeDiagnoz(stevec):
             print(i)
             i+=1
 
-#filanjeDiagnoz(30000)
+#filanjeDiagnoz(10000)

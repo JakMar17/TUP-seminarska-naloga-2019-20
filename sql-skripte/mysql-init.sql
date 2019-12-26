@@ -96,20 +96,3 @@ create table preiskava
    primary key (ime_preiskave)
 );
 
-alter table diagnoza add constraint FK_Relationship_6 foreign key (koda)
-      references MKB_koda (koda) on delete restrict on update restrict;
-
-alter table diagnoza add constraint FK_diagnoza_obravnava foreign key (st_obravnave)
-      references obravnava (st_obravnave) on delete restrict on update restrict;
-
-alter table izvid add constraint FK_izvid_obravnava foreign key (st_obravnave)
-      references obravnava (st_obravnave) on delete restrict on update restrict;
-
-alter table izvid add constraint FK_izvid_preiskava foreign key (ime_preiskave)
-      references preiskava (ime_preiskave) on delete restrict on update restrict;
-
-alter table obravnava add constraint FK_oddelek_obravnava foreign key (sifra_oddelka)
-      references oddelek (sifra_oddelka) on delete restrict on update restrict;
-
-alter table obravnava add constraint FK_pacient_obravnava foreign key (kzz)
-      references pacient (kzz) on delete restrict on update restrict;
