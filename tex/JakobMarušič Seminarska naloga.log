@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7250 64-bit) (preloaded format=pdflatex 2019.12.10)  26 DEC 2019 13:06
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7250 64-bit) (preloaded format=pdflatex 2019.12.10)  27 DEC 2019 14:53
 entering extended mode
 **"c:/Users/jakob/Documents/TUP/seminarska/tex/JakobMarušič Seminarska naloga.tex"
 ("c:/Users/jakob/Documents/TUP/seminarska/tex/JakobMarušič Seminarska naloga.tex"
@@ -290,19 +290,65 @@ Overfull \hbox (45.82495pt too wide) in paragraph at lines 275--285
  [] 
  []
 
-[12] [13] ("c:/Users\jakob\Documents\TUP\seminarska\tex\JakobMarušič Seminarska naloga.aux") ) 
+[12] [13]
+Overfull \hbox (80.55757pt too wide) in paragraph at lines 334--344
+ [] 
+ []
+
+
+Overfull \hbox (80.55757pt too wide) in paragraph at lines 349--359
+ [] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 360--364
+
+ []
+
+
+Overfull \hbox (40.62178pt too wide) in paragraph at lines 368--378
+ [] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 379--383
+
+ []
+
+[14]
+Overfull \hbox (14.97354pt too wide) in paragraph at lines 388--398
+ [] 
+ []
+
+LaTeX Font Info:    Trying to load font information for OML+cmr on input line 419.
+("C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\tex/latex/base\omlcmr.fd"
+File: omlcmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OML/cmr/m/n' in size <10.95> not available
+(Font)              Font shape `OML/cmm/m/it' tried instead on input line 419.
+
+Overfull \hbox (80.55757pt too wide) in paragraph at lines 429--439
+ [] 
+ []
+
+
+Overfull \hbox (14.97354pt too wide) in paragraph at lines 442--452
+ [] 
+ []
+
+[15] [16] ("c:/Users\jakob\Documents\TUP\seminarska\tex\JakobMarušič Seminarska naloga.aux") ) 
 Here is how much of TeX's memory you used:
- 4131 strings out of 492484
- 58574 string characters out of 3121600
- 318864 words of memory out of 3000000
- 8429 multiletter control sequences out of 15000+200000
- 11274 words of font info for 39 fonts, out of 3000000 for 9000
+ 4167 strings out of 492484
+ 59116 string characters out of 3121600
+ 326864 words of memory out of 3000000
+ 8461 multiletter control sequences out of 15000+200000
+ 11992 words of font info for 41 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 55i,14n,40p,473b,1302s stack positions out of 5000i,500n,10000p,200000b,50000s
-<C:/Users/jakob/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/jakob/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/jakob/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><C:/Users/jakob/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/jakob/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/jakob/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Users/jakob/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/jakob/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/Users/jakob/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/jakob/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on "c:/Users\jakob\Documents\TUP\seminarska\tex\JakobMarušič Seminarska naloga.pdf" (13 pages, 755274 bytes).
+ 55i,14n,40p,473b,1586s stack positions out of 5000i,500n,10000p,200000b,50000s
+<C:/Users/jakob/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/jakob/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/jakob/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbxti10.pfb><C:/Users/jakob/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><C:/Users/jakob/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/jakob/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/jakob/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/jakob/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Users/jakob/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/jakob/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/Users/jakob/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/jakob/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb>
+Output written on "c:/Users\jakob\Documents\TUP\seminarska\tex\JakobMarušič Seminarska naloga.pdf" (16 pages, 786351 bytes).
 PDF statistics:
- 96 PDF objects out of 1000 (max. 8388607)
+ 113 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  26 words of extra memory for PDF output out of 10000 (max. 10000000)
 

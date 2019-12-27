@@ -34,12 +34,24 @@ mssql_connection = pyodbc.connect(
     PWD=root_ROOT'
 )
 
+mariadb_connection = mysql.connector.connect(
+                    user = "root",
+                    password = "root",
+                    host = "localhost",
+                    port = "7203",
+                    database = "[TUP]ZD",
+                    auth_plugin='mysql_native_password'
+)
+
+
 postgres_cursor = postgres_connection.cursor()
 mysql_cursor = mysql_connection.cursor()
 mssql_cursor = mssql_connection.cursor()
+mariadb_cursor = mariadb_connection.cursor()
 print(postgres_connection)
 print(mysql_connection)
 print(mssql_connection)
+print(mariadb_connection)
 
 
 def toFloat(x):
@@ -458,9 +470,9 @@ mssql_query = "SELECT TABLE_NAME\
                 FROM INFORMATION_SCHEMA.TABLES\
                 WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_SCHEMA='dbo'"
 
-izprazniBazo(mssql_cursor, mssql_connection, dobiImenaTabel(mssql_cursor, mssql_query))
-izprazniBazo(mysql_cursor, mysql_connection, dobiImenaTabel(mysql_cursor, mysql_query))
-izprazniBazo(postgres_cursor, postgres_connection, dobiImenaTabel(postgres_cursor, postgres_query))
+#izprazniBazo(mssql_cursor, mssql_connection, dobiImenaTabel(mssql_cursor, mssql_query))
+#izprazniBazo(mysql_cursor, mysql_connection, dobiImenaTabel(mysql_cursor, mysql_query))
+#izprazniBazo(postgres_cursor, postgres_connection, dobiImenaTabel(postgres_cursor, postgres_query))
 
 t_mysql = ["MySQL vstavljanje"]
 t_postgres = ["PostgreSQL vstavljanje"]
@@ -523,6 +535,43 @@ def testiraj(x):
     zapisi(v_rez, t_mssql)
     zapisi(d_rez, td_postgres)
 
+def napolniBazo_mariadb():
+    skupenCas = 0
 
+    print("MariaDB")
 
-testiraj(2)
+    t = timer(pacient, mariadb_cursor, mariadb_connection)
+    print("Pacient:\t" + str("%.5f" %t))
+    skupenCas += t
+
+    t = timer(oddelek, mariadb_cursor, mariadb_connection)
+    print("Oddelek:\t" + str("%.5f" %t))
+    skupenCas += t
+
+    t = timer(obravnava, mariadb_cursor, mariadb_connection)
+    print("Obravnava:\t" + str("%.5f" %t))
+    skupenCas += t
+
+    t = timer(kode, mariadb_cursor, mariadb_connection)
+    print("Kode:\t" + str("%.5f" %t))
+    skupenCas += t
+
+    t = timer(diagnoza, mariadb_cursor, mariadb_connection)
+    print("Diagnoza:\t" + str("%.5f" %t))
+    skupenCas += t
+
+    t = timer(preiskava, mariadb_cursor, mariadb_connection)
+    print("Preiskava:\t" + str("%.5f" %t))
+    skupenCas += t
+
+    t = timer(izvid, mariadb_cursor, mariadb_connection)
+    print("Izvid:\t" + str("%.5f" %t))
+    skupenCas += t
+
+    print("%.5f" % skupenCas)
+    return skupenCas
+
+#testiraj(2)
+
+izprazniBazo(mariadb_cursor, mariadb_connection, dobiImenaTabel(mariadb_cursor, mysql_query))
+napolniBazo_mariadb()

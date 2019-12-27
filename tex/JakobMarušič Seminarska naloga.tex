@@ -288,4 +288,168 @@ Iz zgornjih rezultatov lahko sklepamo, da je brisanje podatkov iz podatkovne baz
 Ravno zaradi tega so relativne razlike med testiranimi SUPB-ji izjemno velike v primerjavi z razlikami pri vstavljanju, čeprav
 so absolutne razlike (predvsem med MS SQL Server in PostgreSQL) zanemarljive.
 
+\section{Branje podatov iz podatkovne baze}
+\subsection{Povezovanje tabel in primerjava med \textit{WHERE} in \textit{INNER JOIN}}
+
+\paragraph{SQL poizvedba}
+Poizvedba za vsakega izmed pacientov prikaže pacientovo številko zdravstvenega zavarovanja, spol, številko obravnave
+ter kakšna vrsta preiskave je bila opravljena in njeno vrednost. V testiranju sta bili uporabljeni dve različni poizvedbi
+ena z uporabo \textit{INNER JOIN} (poizvedba 1) in druga z uporabo \textit{WHERE} stavka (poizvedba 2).
+\begin{lstlisting}[language = SQL]
+Poizvedba 1:
+   select
+      p.kzz,
+      p.spol,
+      o.st_obravnave,
+      i.ime_preiskave,
+      i.vrednost
+   from pacient p
+   inner join obravnava o on o.kzz = p.kzz
+   inner join izvid i on i.st_obravnave=o.st_obravnave
+   order by p.kzz, o.st_obravnave
+\end{lstlisting}
+
+\begin{lstlisting}[language = SQL]
+Poizvedba 2:
+   select
+       p.kzz,
+       p.spol,
+       o.st_obravnave,
+       i.ime_preiskave,
+       i.vrednost
+   from
+        pacient p,
+        obravnava o,
+        izvid i
+   where
+       p.kzz = o.kzz and
+       o.st_obravnave = i.st_obravnave
+   order by p.kzz, o.st_obravnave
+\end{lstlisting}
+
+\paragraph{Rezultati poizvedbe 1 (\textit{INNER JOIN})}
+Test se je izvedel desetkrat, avtomatsko z uporabo Python skripte \textit{poizvedbe.py} za vse tri podatkovne baze.
+
+\begin{center}
+   \begin{tabular}{||c|c|c|c||}
+      \hline
+      \textbf{SUPB} & \textbf{Najboljši [ms]} & \textbf{Najslabši [ms]} & \textbf{Povprečen rezultat [ms]}\\
+      \hline
+      \hline
+      Microsoft SQL Server & 361 & 389 & 372 \\
+      MySql & 710 & 842 & 782 \\
+      PostgreSQL & 1052 & 1352 & 1135\\
+      \hline
+   \end{tabular}
+\end{center}
+Primerjava hitrsoti izvedbe SQL stavka z uporabo \textit{INNER JOIN}
+
+\paragraph{Rezultati poizvedbe 1 (\textit{WHERE})}
+\begin{center}
+   \begin{tabular}{||c|c|c|c||}
+      \hline
+      \textbf{SUPB} & \textbf{Najboljši [ms]} & \textbf{Najslabši [ms]} & \textbf{Povprečen rezultat [ms]}\\
+      \hline
+      \hline
+      Microsoft SQL Server & 367 & 420 & 393 \\
+      MySql & 795 & 1000 & 874 \\
+      PostgreSQL & 1056 & 1313 & 1085\\
+      \hline
+   \end{tabular}
+\end{center}
+Primerjava hitrsoti izvedbe SQL stavka z uporabo \textit{WHERE}
+\\\\
+Microsoft SQL Server je tako pri poizvedbi 1 kot pri poizvedbi 2 za (vsaj) \(41\%\) hitrejši od MySql ter vsaj \(60\%\) od PostgreSQL, 
+kateri se izkaže za veliko počasnejšega od konkurence.
+
+Razlike med hitrostjo poizvedb pri uporabi \textit{WHERE} in \textit{INNER JOIN} so pri vseh treh bazah zanemarljive, vendar vseeno opazne.
+
+\begin{center}
+   \begin{tabular}{||c|c|c|c||}
+      \hline
+      \textbf{SUPB} & \textbf{\textit{INNER JOIN} [ms]} & \textbf{\textit{WHERE} [ms]} & \textbf{Razlika [\%]}\\
+      \hline
+      \hline
+      Microsoft SQL Server & 392 & 372 & -4,5 \\
+      MySql & 781 & 874 & 10,6 \\
+      PostgreSQL & 1084 & 1135 & 7,7\\
+      \hline
+   \end{tabular}
+\end{center}
+Prikaz razlike v povprečni hitrosti izvedbe SQL poizvedbe z uporabo \textit{INNER JOIN} in \textit{WHERE} stavka.
+\\\\
+Relativne razlike v hitrosti so najmanj razvidne pri Microsoft SQL Server, kjer se zdi, da je \textit{WHERE} poizvedba bolje optimizirana, vendar so razlike premajhne, da bi lahko kaj takega trdili z dovolj veliko verjetnostjo.
+Pri PostgreSQL in predvsem pri MySql se zdi, da je \textit{INNER JOIN} boljša izbira.
+
+\paragraph{Določitev točk} Čeprav se poizvedba deli na dve sintaktično različni, je razultat obeh poizvedb identičen. Kot takega
+ga torej štejemo kot eno postavko izračuna točk, pri čemer se upošteva boljši rezultat obeh poizvedb.
+
+\begin{center}
+   \begin{tabular}{||c|c|c|c||}
+      \hline
+      \textbf{SUPB} & \textbf{Testiranje} & \textbf{Odstotek točk [\%]} & \textbf{Število točk}\\
+      \hline
+      \hline
+      Microsoft SQL Server & 372 & 100 & 50 \\
+      MySql & 781 & 50,3 & 23,1 \\
+      PostgreSQL & 1085 & 36,2 & 17,2\\
+      \hline
+   \end{tabular}
+\end{center}
+
+\subsection{Uporaba funkcije \textit{COUNT} v povezanih tabelah}
+Test se je izvedel desetkrat, avtomatsko z uporabo Python skripte \textit{poizvedbe.py} za vse tri podatkovne baze.
+
+\paragraph{SQL poizvedba}
+Poizvedba izpiše ime preiskave in število izvidov, katerih vrednost je višja od priporočene vrednosti glede na spol.
+Izpis je urejen padajoče po številu prekoračenih izvidov.
+\begin{lstlisting}[language = SQL]
+select
+   i.ime_preiskave,
+   count(i.ime_preiskave)
+from
+   izvid i
+inner join obravnava o on 
+      i.st_obravnave = o.st_obravnave
+inner join pacient p 
+      on p.kzz = o.kzz
+inner join preiskava p2 
+      on i.ime_preiskave = p2.ime_preiskave
+where
+   (p.spol = 'M' and p2.max_m <= i.vrednost 
+      and p2.max_m is not null) 
+   or
+   (p.spol = 'Z' and p2.max_z <= i.vrednost 
+      and p2.max_z is not null)
+group by i.ime_preiskave
+order by count(i.ime_preiskave) desc
+\end{lstlisting}
+
+\begin{center}
+   \begin{tabular}{||c|c|c|c||}
+      \hline
+      \textbf{SUPB} & \textbf{Najboljši [ms]} & \textbf{Najslabši [ms]} & \textbf{Povprečen rezultat [ms]}\\
+      \hline
+      \hline
+      PostgreSQL & 378 & 504 & 413 \\
+      Microsoft SQL Server & 606 & 646 & 633 \\
+      MySql & 1653 & 1778 & 1704\\
+      \hline
+   \end{tabular}
+\end{center}
+
+\begin{center}
+   \begin{tabular}{||c|c|c|c||}
+      \hline
+      \textbf{SUPB} & \textbf{Testiranje} & \textbf{Odstotek točk [\%]} & \textbf{Število točk}\\
+      \hline
+      \hline
+      PostgreSQL & 413 & 100 & 50\\
+      Microsoft SQL Server & 633 & 65,2 & 32,6 \\
+      MySql & 1704 & 24,2 & 12,1 \\
+      \hline
+   \end{tabular}
+\end{center}
+
+
 \end{document}
