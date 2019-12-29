@@ -34,28 +34,40 @@ mssql_connection = pyodbc.connect(
     PWD=root_ROOT'
 )
 
+mariadb_connection = mysql.connector.connect(
+                    user = "root",
+                    password = "root",
+                    host = "localhost",
+                    port = "7203",
+                    database = "[TUP]ZD",
+                    auth_plugin='mysql_native_password'
+)
+
+
 postgres_cursor = postgres_connection.cursor()
 mysql_cursor = mysql_connection.cursor()
 mssql_cursor = mssql_connection.cursor()
+mariadb_cursor = mariadb_connection.cursor()
 print(postgres_connection)
 print(mysql_connection)
 print(mssql_connection)
+print(mariadb_connection)
 
-query1_join = "select p.kzz, p.spol, o.st_obravnave, i.ime_preiskave, i.vrednost\
+query1_join = "Select p.kzz, p.spol, o.st_obravnave, i.ime_preiskave, i.vrednost\
                 from pacient p\
                 inner join obravnava o on o.kzz = p.kzz\
                 inner join izvid i on i.st_obravnave = o.st_obravnave\
                 order by p.kzz, o.st_obravnave"
 
-query1_where = "select p.kzz, p.spol, o.st_obravnave, i.ime_preiskave, i.vrednost\
+query1_where = "Select p.kzz, p.spol, o.st_obravnave, i.ime_preiskave, i.vrednost\
                 from pacient p, obravnava o, izvid i\
                 where p.kzz = o.kzz and o.st_obravnave = i.st_obravnave\
                 order by p.kzz, o.st_obravnave"
 
-query2 = "select i.ime_preiskave, count(i.ime_preiskave)\
+query2 = "Select i.ime_preiskave, count(i.ime_preiskave)\
             from izvid i\
             inner join obravnava o on i.st_obravnave = o.st_obravnave\
-            inner join pacient p on p.kzz = o.kzz\
+            Inner join pacient p on p.kzz = o.kzz\
             inner join preiskava p2 on i.ime_preiskave = p2.ime_preiskave\
             where\
                 (p.spol = 'M' and p2.max_m <= i.vrednost and p2.max_m is not null) or\
@@ -63,7 +75,7 @@ query2 = "select i.ime_preiskave, count(i.ime_preiskave)\
             group by i.ime_preiskave\
             order by count(i.ime_preiskave) desc"
 
-query3 = "select ime_preiskave, count(vrednost), min(vrednost), max(vrednost), avg(vrednost)\
+query3 = "Select ime_preiskave, count(vrednost), min(vrednost), max(vrednost), avg(vrednost)\
             from izvid\
             group by ime_preiskave\
             having count(vrednost) > 200 and avg(vrednost) * 2 <= max(vrednost)\
@@ -77,7 +89,7 @@ query4 = "select m.si_naziv, count(o.st_obravnave) as Stevilo,\
                         obravnava o1,\
                         diagnoza d1,\
                         MKB_koda m1\
-                    where\
+                    Where\
                         p1.kzz = o1.kzz and\
                         d1.st_obravnave = o1.st_obravnave and\
                         d1.icd_diagnoze = m1.koda and\
@@ -90,20 +102,20 @@ query4 = "select m.si_naziv, count(o.st_obravnave) as Stevilo,\
                         obravnava o1,\
                         diagnoza d1,\
                         MKB_koda m1\
-                    where\
+                    Where\
                         p1.kzz = o1.kzz and\
                         d1.st_obravnave = o1.st_obravnave and\
                         d1.icd_diagnoze = m1.koda and\
                         m1.si_naziv = m.si_naziv\
             ) as max,\
             (\
-                select avg(p1.starost)\
+                Select avg(p1.starost)\
                     from\
                         pacient p1,\
                         obravnava o1,\
                         diagnoza d1,\
                         MKB_koda m1\
-                    where\
+                    Where\
                         p1.kzz = o1.kzz and\
                         d1.st_obravnave = o1.st_obravnave and\
                         d1.icd_diagnoze = m1.koda and\
@@ -111,13 +123,13 @@ query4 = "select m.si_naziv, count(o.st_obravnave) as Stevilo,\
             ) as povprecje\
         from pacient p\
             inner join obravnava o on p.kzz = o.kzz\
-            inner join diagnoza d on o.st_obravnave = d.st_obravnave\
+            Inner join diagnoza d on o.st_obravnave = d.st_obravnave\
             inner join MKB_koda m on m.koda = d.icd_diagnoze\
             inner join izvid i on d.st_obravnave = i.st_obravnave\
             inner join preiskava p2 on i.ime_preiskave = p2.ime_preiskave\
             where\
                 p.starost between 21 and 40 and\
-                m.si_naziv like '%trčen%'\
+                m.si_naziv like '%tr_en%'\
             group by m.si_naziv, p.starost\
             order by count(o.st_obravnave) desc"
 
@@ -147,13 +159,15 @@ def testirajPoizvedbo(cursor, query, x):
 def test(x, query):
     print("MSSQL \t" + str(testirajPoizvedbo(mssql_cursor, query, x) ))
     print("PostgreSQL \t" + str(testirajPoizvedbo(postgres_cursor, query, x) ))
+    print("MariaDB: \t" + str(testirajPoizvedbo(mariadb_cursor, query, x)))
     print("MySql \t" + str(testirajPoizvedbo(mysql_cursor, query, x) ))
 
-#test(10, query1_join)
-#print()
-#test(10, query1_where)
-#print()
-#test(10, query2)
-
-#test(100, query3)
-test(1, query4)
+test(10, query1_join)
+print()
+test(10, query1_where)
+print()
+test(10, query2)
+print()
+test(10, query3)
+print()
+test(10, query4)

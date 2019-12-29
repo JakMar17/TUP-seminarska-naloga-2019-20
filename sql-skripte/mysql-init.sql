@@ -42,7 +42,7 @@ create table izvid
 (
    datum_ura            datetime,
    vrednost             float(5),
-   id_izvida            int not null,
+   id_izvida            int not null AUTO_INCREMENT,
    ime_preiskave        varchar(100) not null,
    st_obravnave         int not null,
    primary key (id_izvida)

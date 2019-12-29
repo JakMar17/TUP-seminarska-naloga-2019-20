@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7250 64-bit) (preloaded format=pdflatex 2019.12.10)  27 DEC 2019 14:53
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7250 64-bit) (preloaded format=pdflatex 2019.12.10)  29 DEC 2019 16:20
 entering extended mode
 **"c:/Users/jakob/Documents/TUP/seminarska/tex/JakobMarušič Seminarska naloga.tex"
 ("c:/Users/jakob/Documents/TUP/seminarska/tex/JakobMarušič Seminarska naloga.tex"
@@ -154,11 +154,6 @@ Package grfext Info: Graphics extension search list:
 ]
 Poglavje 1.
 
-Overfull \hbox (10.04968pt too wide) in paragraph at lines 48--51
-\OT1/cmr/m/n/10.95 Testiranje se bo iz-va-jalo na treh pro-sto do-sto-pnih po-dat-kov-nih ba-zah: MySQL,
- []
-
-
 Underfull \hbox (badness 10000) in paragraph at lines 48--51
 
  []
@@ -169,75 +164,85 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <8> on input line 56.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line 56.
-
-Overfull \hbox (3.29709pt too wide) in paragraph at lines 83--84
-\OT1/cmr/m/n/10.95 Podatkovna baza je bila namescena in se je iz-va-jala na racunalniku s sledecimi
- []
-
 [3
 
 ]
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <9> on input line 98.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 98.
+Overfull \hbox (3.29709pt too wide) in paragraph at lines 91--92
+\OT1/cmr/m/n/10.95 Podatkovna baza je bila namescena in se je iz-va-jala na racunalniku s sledecimi
+ []
 
-Underfull \hbox (badness 10000) in paragraph at lines 112--115
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <9> on input line 106.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 106.
+
+Underfull \hbox (badness 10000) in paragraph at lines 122--125
 
  []
 
 
-Overfull \hbox (26.21257pt too wide) in paragraph at lines 117--128
+Overfull \hbox (26.21257pt too wide) in paragraph at lines 127--138
  [] 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 131--134
+[4]
+Underfull \hbox (badness 10000) in paragraph at lines 141--144
 
  []
 
-[4] [5]
+[5]
 Poglavje 2.
 <./pics/konceptni.png, id=27, 653.44125pt x 487.8225pt>
 File: ./pics/konceptni.png Graphic file (type png)
 <use ./pics/konceptni.png>
-Package pdftex.def Info: ./pics/konceptni.png  used on input line 143.
+Package pdftex.def Info: ./pics/konceptni.png  used on input line 153.
 (pdftex.def)             Requested size: 360.0pt x 268.74982pt.
+<./pics/fizicni-mysql.png, id=29, 599.99156pt x 472.01344pt>
+File: ./pics/fizicni-mysql.png Graphic file (type png)
+<use ./pics/fizicni-mysql.png>
+Package pdftex.def Info: ./pics/fizicni-mysql.png  used on input line 160.
+(pdftex.def)             Requested size: 360.0pt x 283.21745pt.
 [6
 
  <./pics/konceptni.png>]
-<./pics/fizicni-mysql.png, id=33, 599.99156pt x 472.01344pt>
-File: ./pics/fizicni-mysql.png Graphic file (type png)
-<use ./pics/fizicni-mysql.png>
-Package pdftex.def Info: ./pics/fizicni-mysql.png  used on input line 167.
-(pdftex.def)             Requested size: 360.0pt x 283.21745pt.
+Overfull \hbox (81.12955pt too wide) in paragraph at lines 163--165
+[]\OT1/cmr/m/n/10.95 Skripta za ustvar-ja-nje po-dat-kovne baze je shra-njena v da-to-teki $[]$.
+ []
 
-Overfull \hbox (81.12955pt too wide) in paragraph at lines 170--171
+[7 <./pics/fizicni-mysql.png>]
+<./pics/fizicni-postgres.png, id=39, 616.55344pt x 477.28313pt>
+File: ./pics/fizicni-postgres.png Graphic file (type png)
+<use ./pics/fizicni-postgres.png>
+Package pdftex.def Info: ./pics/fizicni-postgres.png  used on input line 167.
+(pdftex.def)             Requested size: 360.0pt x 278.68878pt.
+
+Overfull \hbox (91.90303pt too wide) in paragraph at lines 170--171
 []\OT1/cmr/m/n/10.95 Skripta za ustvar-ja-nje po-dat-kovne baze je shra-njena v da-to-teki $[]$. 
  []
 
-<./pics/fizicni-postgres.png, id=34, 616.55344pt x 477.28313pt>
-File: ./pics/fizicni-postgres.png Graphic file (type png)
-<use ./pics/fizicni-postgres.png>
-Package pdftex.def Info: ./pics/fizicni-postgres.png  used on input line 174.
-(pdftex.def)             Requested size: 360.0pt x 278.68878pt.
-
-Overfull \hbox (74.90303pt too wide) in paragraph at lines 177--178
-\OT1/cmr/m/n/10.95 Skripta za ustvar-ja-nje po-dat-kovne baze je shra-njena v da-to-teki $[]$. 
- []
-
-<./pics/fizicni-mssql.png, id=35, 605.26125pt x 469.755pt>
+[8 <./pics/fizicni-postgres.png>]
+<./pics/fizicni-mssql.png, id=44, 605.26125pt x 469.755pt>
 File: ./pics/fizicni-mssql.png Graphic file (type png)
 <use ./pics/fizicni-mssql.png>
-Package pdftex.def Info: ./pics/fizicni-mssql.png  used on input line 181.
+Package pdftex.def Info: ./pics/fizicni-mssql.png  used on input line 175.
 (pdftex.def)             Requested size: 360.0pt x 279.40376pt.
-[7 <./pics/fizicni-mysql.png>]
-Overfull \hbox (63.29007pt too wide) in paragraph at lines 184--185
-\OT1/cmr/m/n/10.95 Skripta za ustvar-ja-nje po-dat-kovne baze je shra-njena v da-to-teki $[]$. 
+
+Overfull \hbox (80.29007pt too wide) in paragraph at lines 178--179
+[]\OT1/cmr/m/n/10.95 Skripta za ustvar-ja-nje po-dat-kovne baze je shra-njena v da-to-teki $[]$. 
  []
 
-[8 <./pics/fizicni-postgres.png>] [9 <./pics/fizicni-mssql.png>]
+[9 <./pics/fizicni-mssql.png>]
 Poglavje 3.
+
+Underfull \hbox (badness 10000) in paragraph at lines 194--198
+
+ []
+
+
+Overfull \hbox (40.53252pt too wide) in paragraph at lines 200--211
+ [] 
+ []
+
 [10
 
 ]
@@ -246,109 +251,166 @@ Underfull \hbox (badness 10000) in paragraph at lines 213--216
  []
 
 
-Overfull \hbox (40.53252pt too wide) in paragraph at lines 218--228
- [] 
- []
-
-<./pics/vstavljanje001.png, id=52, 720.44156pt x 435.12563pt>
-File: ./pics/vstavljanje001.png Graphic file (type png)
-<use ./pics/vstavljanje001.png>
-Package pdftex.def Info: ./pics/vstavljanje001.png  used on input line 231.
-(pdftex.def)             Requested size: 360.0pt x 217.42949pt.
-[11 <./pics/vstavljanje001.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 237--245
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 237--245
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 237--245
-
- []
-
-
-Overfull \hbox (28.71309pt too wide) in paragraph at lines 247--257
+Overfull \hbox (48.24062pt too wide) in paragraph at lines 218--229
  [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 260--262
+Underfull \hbox (badness 10000) in paragraph at lines 232--234
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 260--262
+Underfull \hbox (badness 10000) in paragraph at lines 232--234
 
  []
 
-
-Overfull \hbox (45.82495pt too wide) in paragraph at lines 275--285
+[11]
+Overfull \hbox (45.82495pt too wide) in paragraph at lines 248--259
  [] 
  []
 
-[12] [13]
-Overfull \hbox (80.55757pt too wide) in paragraph at lines 334--344
- [] 
- []
-
-
-Overfull \hbox (80.55757pt too wide) in paragraph at lines 349--359
+[12]
+Overfull \hbox (30.24873pt too wide) in paragraph at lines 308--319
  [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 360--364
-
+Overfull \hbox (30.24873pt too wide) in paragraph at lines 324--335
+ [] 
  []
 
-
-Overfull \hbox (40.62178pt too wide) in paragraph at lines 368--378
+[13]
+Overfull \hbox (40.62178pt too wide) in paragraph at lines 341--352
  [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 379--383
+Overfull \hbox (14.97354pt too wide) in paragraph at lines 359--370
+ [] 
+ []
 
+
+Overfull \hbox (3.58217pt too wide) in paragraph at lines 372--372
+[]\OT1/cmr/bx/n/12 Uporaba funk-cije \OT1/cmr/bx/it/12 CO-UNT \OT1/cmr/bx/n/12 v po-ve-za-nih ta-be-lah in pred-
  []
 
 [14]
-Overfull \hbox (14.97354pt too wide) in paragraph at lines 388--398
- [] 
- []
-
-LaTeX Font Info:    Trying to load font information for OML+cmr on input line 419.
-("C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\tex/latex/base\omlcmr.fd"
+LaTeX Font Info:    Trying to load font information for OML+cmr on input line 392.
+ ("C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\tex/latex/base\omlcmr.fd"
 File: omlcmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OML/cmr/m/n' in size <10.95> not available
-(Font)              Font shape `OML/cmm/m/it' tried instead on input line 419.
+(Font)              Font shape `OML/cmm/m/it' tried instead on input line 392.
 
-Overfull \hbox (80.55757pt too wide) in paragraph at lines 429--439
+Overfull \hbox (30.24873pt too wide) in paragraph at lines 402--413
  [] 
  []
 
 
-Overfull \hbox (14.97354pt too wide) in paragraph at lines 442--452
+Overfull \hbox (14.97354pt too wide) in paragraph at lines 416--427
  [] 
  []
 
-[15] [16] ("c:/Users\jakob\Documents\TUP\seminarska\tex\JakobMarušič Seminarska naloga.aux") ) 
+[15]
+LaTeX Font Info:    Trying to load font information for OMS+cmr on input line 451.
+ ("C:\Users\jakob\AppData\Local\Programs\MiKTeX 2.9\tex/latex/base\omscmr.fd"
+File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 451.
+
+Overfull \hbox (30.24873pt too wide) in paragraph at lines 456--467
+ [] 
+ []
+
+
+Overfull \hbox (14.97354pt too wide) in paragraph at lines 470--481
+ [] 
+ []
+
+[16]
+Overfull \hbox (1.3332pt too wide) in paragraph at lines 490--492
+ \OT1/cmr/bx/n/10.95 SQL po-i-zvedba[] \OT1/cmr/m/n/10.95 Po-i-zvedba poisce vse di-a-gnoze v ka-te-rih se na-haja kljucna
+ []
+
+
+Overfull \hbox (1.35376pt too wide) in paragraph at lines 494--495
+[][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+[17]
+Overfull \hbox (30.24873pt too wide) in paragraph at lines 553--564
+ [] 
+ []
+
+
+Overfull \hbox (14.97354pt too wide) in paragraph at lines 567--578
+ [] 
+ []
+
+
+Overfull \hbox (1.3332pt too wide) in paragraph at lines 588--590
+ \OT1/cmr/bx/n/10.95 SQL po-i-zvedba[] \OT1/cmr/m/n/10.95 Po-i-zvedba poisce vse di-a-gnoze v ka-te-rih se na-haja kljucna
+ []
+
+[18]
+Overfull \hbox (20.64166pt too wide) in paragraph at lines 598--609
+ [] 
+ []
+
+
+Overfull \hbox (14.97354pt too wide) in paragraph at lines 612--623
+ [] 
+ []
+
+[19]
+Poglavje 4.
+
+Overfull \hbox (12.72932pt too wide) in paragraph at lines 630--647
+ [] 
+ []
+
+
+Overfull \hbox (4.96967pt too wide) in paragraph at lines 650--654
+ \OT1/cmr/bx/n/10.95 Ra-zu-me-va-nje re-zul-ta-tov per-for-mancnih te-stov[] \OT1/cmr/m/n/10.95 Iz-ve-deni te-sti v okviru
+ []
+
+[20
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 675--680
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 682--685
+
+ []
+
+
+Overfull \hbox (6.55173pt too wide) in paragraph at lines 687--690
+\OT1/cmr/m/n/10.95 Izbira SUPB-ja bo se na-prej ostala pri-marno od-vi-sna od kom-pe-tenc narocnika-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 687--690
+
+ []
+
+[21] [22] ("c:/Users\jakob\Documents\TUP\seminarska\tex\JakobMarušič Seminarska naloga.aux") ) 
 Here is how much of TeX's memory you used:
- 4167 strings out of 492484
- 59116 string characters out of 3121600
- 326864 words of memory out of 3000000
- 8461 multiletter control sequences out of 15000+200000
+ 4201 strings out of 492484
+ 59557 string characters out of 3121600
+ 328864 words of memory out of 3000000
+ 8493 multiletter control sequences out of 15000+200000
  11992 words of font info for 41 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 55i,14n,40p,473b,1586s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 55i,14n,40p,473b,1588s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Users/jakob/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/jakob/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/jakob/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbxti10.pfb><C:/Users/jakob/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><C:/Users/jakob/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/jakob/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/jakob/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/jakob/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Users/jakob/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/jakob/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/Users/jakob/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/jakob/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on "c:/Users\jakob\Documents\TUP\seminarska\tex\JakobMarušič Seminarska naloga.pdf" (16 pages, 786351 bytes).
+Output written on "c:/Users\jakob\Documents\TUP\seminarska\tex\JakobMarušič Seminarska naloga.pdf" (22 pages, 773322 bytes).
 PDF statistics:
- 113 PDF objects out of 1000 (max. 8388607)
+ 130 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 26 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 21 words of extra memory for PDF output out of 10000 (max. 10000000)
 

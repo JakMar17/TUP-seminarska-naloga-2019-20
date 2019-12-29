@@ -45,9 +45,9 @@ V seminarski nalogi, ki je nastala v okviru predmeta Tehnologija upravljanja pod
 
 \chapter{Način testiranja}
 \section{Izbrani SUPB}
-Testiranje se bo izvajalo na treh prosto dostopnih podatkovnih bazah: MySQL, PostgreSQL in Micorsoft SQL Server.
+Testiranje se bo izvajalo na štirih prosto dostopnih podatkovnih bazah: MySQL, MariaDB, PostgreSQL in Micorsoft SQL Server.
 \\\\
-Vse tri podatkovne baze se bodo izvajale istočasno na Dockerju.
+Vse štiri podatkovne baze se bodo izvajale istočasno na Dockerju.
 
 \subsection{Zagon Docker slik}
 
@@ -58,6 +58,14 @@ docker run --name TUP-sem-mysql -p 7202:3306 -e
 \end{lstlisting}
 
 Baza je dostopna na naslovu http://localhost:7202
+
+\subsection{MariaDB}
+\begin{lstlisting}
+   docker run --name TUP-sem-mariadb -p 7203:3306 -e 
+           MYSQL_ROOT_PASSWORD=root -d mariadb:latest
+   \end{lstlisting}
+   
+   Baza je dostopna na naslovu http://localhost:7203
 
 \subsection{PostgreSQL}
 \begin{lstlisting}
@@ -99,9 +107,11 @@ Podatkovna baza je bila nameščena in se je izvajala na računalniku s sledeči
         \hline
         Verzija MySQL docker slike \footnote{https://hub.docker.com/\_/mysql} & 8.0.18 \\
         \hline
-        Verzija PostgreSQL docker slike & 12.1\\
+        Verzija PostgreSQL docker slike\footnote{https://hub.docker.com/\_/postgres} & 12.1\\
         \hline
-        Verzija MS SQL Server docker slike & 2017\\
+        Verzija MS SQL Server docker slike\footnote{https://hub.docker.com/\_/microsoft-mssql-server} & 2017\\
+        \hline
+        Verzija MariaDB docker slike\footnote{https://hub.docker.com/\_/mariadb} & 10.4.11-bionic\\
         \hline
     \end{tabular}
 \end{center}
@@ -109,7 +119,7 @@ Podatkovna baza je bila nameščena in se je izvajala na računalniku s sledeči
 
 \section{Način točkovanja testiranja in vrste testov}
 
-Vsak test se točkuje z določenim število točk pri čemer je maksimalno število točk določeno po ključu, kjer je glavni faktor pogostost izvajanja določene operacije realnem svetu \textit{(primer: zdravstveni dom)}.
+Vsak test se točkuje z določenim število točk pri čemer je maksimalno število točk določeno po ključu, kjer je glavni faktor pogostost izvajanja določene operacije v realnem svetu \textit{(primer: zdravstveni dom)}.
 \\\\
 Testira se vse vidike operacij nad podatki podatkovne baze, katere izvajamo v okviru \textit{CRUD (Create, Read, Update, Delete)} operacij.
 
@@ -128,7 +138,7 @@ Testira se vse vidike operacij nad podatki podatkovne baze, katere izvajamo v ok
 \end{center}
 
 \section{Način izvedbe testov in določitve točk}
-Pri vsakem testu, ki se bo izvedel večkrat, bomo po definiranem ključu določili zmagovalca, ki v dani kategoriji dobil maksimalno število točk. Naslednji dve podatkovni bazi pa bosta od maksimalnega števila točk dobila odbitek, ki je enak odstotku razlike med lastnim rezultatom in rezultatom zmagovalca kategorije. 
+Pri vsakem testu, ki se bo izvedel večkrat, bomo po definiranem ključu določili zmagovalca, ki v dani kategoriji dobil maksimalno število točk. Naslednje podatkovne baze pa bodo od maksimalnega števila točk dobila odbitek, ki je enak odstotku razlike med lastnim rezultatom in rezultatom zmagovalca kategorije. 
 \\\\
 V zaključku raziskave se bodo točke seštele in tako objektivno določile performančnega zmagovalca testov. Vseeno pa so točke podeljene zgolj informativne narave, saj se izkaže, da pri izbiri pravega SUPB-ja ni pomembna zgolj performanca, temveč tudi izbira posameznika, naj si bo naročnika, upravljalca ali programerja podatkovne baze. Več o tem sledi v zaključku naloge. 
 
@@ -137,38 +147,21 @@ V zaključku raziskave se bodo točke seštele in tako objektivno določile perf
 
 \section{Konceptni model}
 Podatkovna baza za potrebe testiranja je podatkovna baza zdravstvenega doma, ki se je uporabljala pri 3. domači nalogi.
-Podatkovna baza je razdeljena na 6 tabel in ima skupno xx vrstic.
+Podatkovna baza je razdeljena na 7 tabel in ima skupno 1 028 883 vrstic.
 
 \begin{figure}[htb]
     \noindent\includegraphics[width=\linewidth]{./pics/konceptni.png}
     \caption{Konceptni model podatkovne baze}
  \end{figure}
 
-\subsection{Sestava podatkovne baze} 
-
-\begin{center}
-    \begin{tabular}{||l|r||}
-        \hline
-        \textbf{Tabela} & \textbf{Število zapisov v tabeli} \\
-        \hline
-        Pacient & 6 071 \\
-        Obravnava & 6 643\\
-        Diagnoza & 34 274\\
-        Oddelek & 10\\
-        Izvid & 846 906 \\
-        Preiskava & 274\\
-        \hline
-    \end{tabular}
-\end{center}
-
 \section{Fizični model}
-\subsection{MySQL}
+\subsection{MySQL in MariaDB}
 \begin{figure}[htb]
    \noindent\includegraphics[width=\linewidth]{./pics/fizicni-mysql.png}
-   \caption{Fizični model podatkovne baze za MySQL}
+   \caption{Fizični model podatkovne baze za MySQL in MariaDB}
 \end{figure}
 Skripta za ustvarjanje podatkovne baze je shranjena v datoteki \textit{\underline{./sql-skripte/mysql-init.sql}}.
-
+\pagebreak
 \subsection{PostgreSQL}
 \begin{figure}[htb]
    \noindent\includegraphics[width=\linewidth]{./pics/fizicni-postgres.png}
@@ -176,6 +169,7 @@ Skripta za ustvarjanje podatkovne baze je shranjena v datoteki \textit{\underlin
 \end{figure}
 Skripta za ustvarjanje podatkovne baze je shranjena v datoteki \textit{\underline{./sql-skripte/postgres-init.sql}}.
 
+\pagebreak
 \subsection{Microsoft SQL Server}
 \begin{figure}[htb]
    \noindent\includegraphics[width=\linewidth]{./pics/fizicni-mssql.png}
@@ -185,11 +179,9 @@ Skripta za ustvarjanje podatkovne baze je shranjena v datoteki \textit{\underlin
 
 \chapter{Testiranje}
 
-\section{Kreiranje podatkovne baze}
-
 \section{Vstavljanje (velike količine) zapisov v podatkovno bazo}
 
-V podatkovno bazo se je vstavilo skupaj xxx zapisov. Vstavljanje je potekalo prek Python skripte filanje.py po postopku: 
+V podatkovno bazo se je vstavilo skupaj 1 028 883 zapisov. Vstavljanje je potekalo prek Python skripte filanje.py po postopku: 
 
 \begin{enumerate}
    \item Iz csv (coma seperated values) datoteke je program prebral vrstico, jo razdeli in pretvoril v pravilen zapis spremelnjivke (s pomočjo vgrajenih ali pomožnih funkcij)
@@ -199,17 +191,7 @@ V podatkovno bazo se je vstavilo skupaj xxx zapisov. Vstavljanje je potekalo pre
    \item Program se premakne na naslednjo vrstico csv datoteke
    \item Ko program obdela vse datoteke, funkcija vrne celoten seštevek časov izvajanja
 \end{enumerate}
-Test se je avomatsko izvedel desetkrat na vseh treh testnih bazah desetkrat v vrstnem redu: Microsoft SQL Server, MySql in PostgreSQL. Po vrsti je program polnil tabele:
-\begin{enumerate}
-   \item Pacient
-   \item Oddelek
-   \item Obravnava
-   \item MKB\_koda
-   \item Diagnoza
-   \item Preiskava
-   \item Izvid
-\end{enumerate}
-
+Test se je avomatsko izvedel desetkrat na vseh testnih bazah.
 Po polnjenju vseh treh podatkovnih baz je program podatkovne baze izpraznil pri čemer je bil uporabljen ukaz \textit{DELETE * FROM |ime tabele| }. 
 \\\\
 Pri obdelavi rezultatov se najboljši in najslabši čas nista upoštevala, iz ostalih pa se je izračunalo povprečje.
@@ -220,6 +202,7 @@ Pri obdelavi rezultatov se najboljši in najslabši čas nista upoštevala, iz o
       \textbf{SUPB} & \textbf{Najboljši čas [s]} & \textbf{Najslabši čas [s]} & \textbf{Povprečje [s]} \\
       \hline
       \hline
+      MariaDB & 482,683 & 563,107 & 488,029 \\
       PostgreSQL & 512,716 & 520,791 & 515,921 \\
       Microsoft SQL Server & 592,745 & 608,040 & 596,453 \\
       MySQL & 619,255 & 630,775 & 623,806\\
@@ -227,18 +210,6 @@ Pri obdelavi rezultatov se najboljši in najslabši čas nista upoštevala, iz o
    \end{tabular}
 \end{center}
 
-\begin{figure}[htb]
-   \noindent\includegraphics[width=\linewidth]{./pics/vstavljanje001.png}
-   \caption{Primerjava "best, worst \& average" vstavljanja}
-\end{figure}
-
-\pagebreak
-
-Iz rezultatov lahko vidimo, da je povprečje PostgreSQL-a ne le najboljše, ampak je celo za \textit{15 \%} 
-boljši od najboljšega časa naslednjega zasledovalca, tj. Microsoft SQL Server, in za \textit{20\%} od MySQL.
-\\\\
-V povprečju je sicer PostgreSQL potreboval približno 8 minut in pol, Microsoft SQL Server nekaj manj, MySql pa nekaj več kot 10 minut.
-\\\\
 Ob tem gre poudariti, da se je pri vseh uporabljal \textit{običajen INSERT} in ne kakšna posebna oblika vstavljanja velike količine podatkov (npr. \textit{BULK INSERT} pri Microsoft SQL Server).
 \\\\
 Iz zgoraj navedenih rezultatov se, kot je zapisano v sekciji 1.4.1, določi točke po naslednjem ključu:
@@ -246,12 +217,13 @@ Iz zgoraj navedenih rezultatov se, kot je zapisano v sekciji 1.4.1, določi toč
 \begin{center}
    \begin{tabular}{||c|c|c|c||}
       \hline
-      \textbf{SUPB} & Rezultat testiranja & Odstotek točk [\%] & Število točk\\
+      \textbf{SUPB} & Rezultat testiranja[ms] & Odstotek točk [\%] & Število točk\\
       \hline
       \hline
-      PostgreSQL & 515,921 & 100 & 25\\
-      Micorsoft SQL Server & 596,453 & 86,5 & 21,6\\
-      MySql & 623,806 & 82,7 & 20,7\\
+      MariaDB & 484 050 & 100 & 25\\
+      PostgreSQL & 515 921 & 93,8 & 23,5\\
+      Micorsoft SQL Server & 596 453 & 81,2 & 20,3\\
+      MySql & 623 806 & 77,6 & 19,4\\
       \hline
    \end{tabular}
 \end{center}
@@ -270,6 +242,7 @@ Testiranje je potekalo po naslednjem postopku:
    \item Program vrne seštevek vsote časov izvajanja funkcije brisanja podatkov
 \end{enumerate}
 
+\pagebreak
 Rezultati izračunani iz povprečja so naslednji:
 \begin{center}
    \begin{tabular}{||c|c|c|c||}
@@ -277,9 +250,10 @@ Rezultati izračunani iz povprečja so naslednji:
       \textbf{SUPB} & \textbf{Testiranje [ms]} & \textbf{Odstotek točk [\%] } & \textbf{Število točk}\\
       \hline
       \hline
-      Microsoft SQL Server & 1,087 & 100 & 25\\
-      PostgreSQL & 1,490 & 72,9 & 18,2\\
-      MySQL & 5,373 & 20,2 & 5,1\\
+      Microsoft SQL Server & 1087 & 100 & 25\\
+      PostgreSQL & 1490 & 72,9 & 18,2\\
+      MariaDB & 2418 & 45,0 & 11,2\\
+      MySQL & 5373 & 20,2 & 5,1\\
       \hline
    \end{tabular}
 \end{center}
@@ -308,7 +282,7 @@ Poizvedba 1:
    inner join izvid i on i.st_obravnave=o.st_obravnave
    order by p.kzz, o.st_obravnave
 \end{lstlisting}
-
+\pagebreak
 \begin{lstlisting}[language = SQL]
 Poizvedba 2:
    select
@@ -328,17 +302,18 @@ Poizvedba 2:
 \end{lstlisting}
 
 \paragraph{Rezultati poizvedbe 1 (\textit{INNER JOIN})}
-Test se je izvedel desetkrat, avtomatsko z uporabo Python skripte \textit{poizvedbe.py} za vse tri podatkovne baze.
+Test se je izvedel desetkrat, avtomatsko z uporabo Python skripte \textit{poizvedbe.py} za vse štiri podatkovne baze.
 
 \begin{center}
    \begin{tabular}{||c|c|c|c||}
       \hline
-      \textbf{SUPB} & \textbf{Najboljši [ms]} & \textbf{Najslabši [ms]} & \textbf{Povprečen rezultat [ms]}\\
+      \textbf{SUPB} & \textbf{Najboljši [ms]} & \textbf{Najslabši [ms]} & \textbf{Povprečje [ms]}\\
       \hline
       \hline
-      Microsoft SQL Server & 361 & 389 & 372 \\
-      MySql & 710 & 842 & 782 \\
-      PostgreSQL & 1052 & 1352 & 1135\\
+      Microsoft SQL Server & 312 & 361 & 334 \\
+      MySql & 701 & 838 & 725 \\
+      PostgreSQL & 879 & 1040 & 925\\
+      MariaDB & 1188 & 1374 & 1237 \\
       \hline
    \end{tabular}
 \end{center}
@@ -348,21 +323,19 @@ Primerjava hitrsoti izvedbe SQL stavka z uporabo \textit{INNER JOIN}
 \begin{center}
    \begin{tabular}{||c|c|c|c||}
       \hline
-      \textbf{SUPB} & \textbf{Najboljši [ms]} & \textbf{Najslabši [ms]} & \textbf{Povprečen rezultat [ms]}\\
+      \textbf{SUPB} & \textbf{Najboljši [ms]} & \textbf{Najslabši [ms]} & \textbf{Povprečje [ms]}\\
       \hline
       \hline
-      Microsoft SQL Server & 367 & 420 & 393 \\
-      MySql & 795 & 1000 & 874 \\
-      PostgreSQL & 1056 & 1313 & 1085\\
+      Microsoft SQL Server & 303 & 375 & 336 \\
+      MySql & 702 & 729 & 710 \\
+      PostgreSQL & 885 & 973 & 909\\
+      MariaDB & 1204 & 1223 & 1212 \\
       \hline
    \end{tabular}
 \end{center}
 Primerjava hitrsoti izvedbe SQL stavka z uporabo \textit{WHERE}
-\\\\
-Microsoft SQL Server je tako pri poizvedbi 1 kot pri poizvedbi 2 za (vsaj) \(41\%\) hitrejši od MySql ter vsaj \(60\%\) od PostgreSQL, 
-kateri se izkaže za veliko počasnejšega od konkurence.
-
-Razlike med hitrostjo poizvedb pri uporabi \textit{WHERE} in \textit{INNER JOIN} so pri vseh treh bazah zanemarljive, vendar vseeno opazne.
+\pagebreak
+Razlike med hitrostjo poizvedb pri uporabi \textit{WHERE} in \textit{INNER JOIN} so pri vseh štirih bazah zanemarljive:
 
 \begin{center}
    \begin{tabular}{||c|c|c|c||}
@@ -370,16 +343,14 @@ Razlike med hitrostjo poizvedb pri uporabi \textit{WHERE} in \textit{INNER JOIN}
       \textbf{SUPB} & \textbf{\textit{INNER JOIN} [ms]} & \textbf{\textit{WHERE} [ms]} & \textbf{Razlika [\%]}\\
       \hline
       \hline
-      Microsoft SQL Server & 392 & 372 & -4,5 \\
-      MySql & 781 & 874 & 10,6 \\
-      PostgreSQL & 1084 & 1135 & 7,7\\
+      Microsoft SQL Server & 334 & 336 & 0,5 \\
+      MySql & 725 & 710 & -2,1 \\
+      PostgreSQL & 925 & 909 & -1,8\\
+      MariaDB & 1237 & 1212 & -2,1 \\
       \hline
    \end{tabular}
 \end{center}
 Prikaz razlike v povprečni hitrosti izvedbe SQL poizvedbe z uporabo \textit{INNER JOIN} in \textit{WHERE} stavka.
-\\\\
-Relativne razlike v hitrosti so najmanj razvidne pri Microsoft SQL Server, kjer se zdi, da je \textit{WHERE} poizvedba bolje optimizirana, vendar so razlike premajhne, da bi lahko kaj takega trdili z dovolj veliko verjetnostjo.
-Pri PostgreSQL in predvsem pri MySql se zdi, da je \textit{INNER JOIN} boljša izbira.
 
 \paragraph{Določitev točk} Čeprav se poizvedba deli na dve sintaktično različni, je razultat obeh poizvedb identičen. Kot takega
 ga torej štejemo kot eno postavko izračuna točk, pri čemer se upošteva boljši rezultat obeh poizvedb.
@@ -390,19 +361,21 @@ ga torej štejemo kot eno postavko izračuna točk, pri čemer se upošteva bolj
       \textbf{SUPB} & \textbf{Testiranje} & \textbf{Odstotek točk [\%]} & \textbf{Število točk}\\
       \hline
       \hline
-      Microsoft SQL Server & 372 & 100 & 50 \\
-      MySql & 781 & 50,3 & 23,1 \\
-      PostgreSQL & 1085 & 36,2 & 17,2\\
+      Microsoft SQL Server & 334 & 100 & 50 \\
+      MySql & 710 & 47,0 & 23,5 \\
+      PostgreSQL & 909 & 36,7 & 18,4\\
+      MariaDB & 1212 & 27,6 & 13,8 \\
       \hline
    \end{tabular}
 \end{center}
 
-\subsection{Uporaba funkcije \textit{COUNT} v povezanih tabelah}
+\subsection{Uporaba funkcije \textit{COUNT} v povezanih tabelah in predpomnjenje}
 Test se je izvedel desetkrat, avtomatsko z uporabo Python skripte \textit{poizvedbe.py} za vse tri podatkovne baze.
 
 \paragraph{SQL poizvedba}
 Poizvedba izpiše ime preiskave in število izvidov, katerih vrednost je višja od priporočene vrednosti glede na spol.
 Izpis je urejen padajoče po številu prekoračenih izvidov.
+\pagebreak
 \begin{lstlisting}[language = SQL]
 select
    i.ime_preiskave,
@@ -428,12 +401,13 @@ order by count(i.ime_preiskave) desc
 \begin{center}
    \begin{tabular}{||c|c|c|c||}
       \hline
-      \textbf{SUPB} & \textbf{Najboljši [ms]} & \textbf{Najslabši [ms]} & \textbf{Povprečen rezultat [ms]}\\
+      \textbf{SUPB} & \textbf{Najboljši [ms]} & \textbf{Najslabši [ms]} & \textbf{Povprečje [ms]}\\
       \hline
       \hline
-      PostgreSQL & 378 & 504 & 413 \\
-      Microsoft SQL Server & 606 & 646 & 633 \\
-      MySql & 1653 & 1778 & 1704\\
+      MariaDB & 1 & 1166 & 118 \\
+      PostgreSQL & 314 & 416 & 362 \\
+      Microsoft SQL Server & 490 & 584 & 518 \\
+      MySql & 1534 & 2567 & 1784\\
       \hline
    \end{tabular}
 \end{center}
@@ -444,12 +418,274 @@ order by count(i.ime_preiskave) desc
       \textbf{SUPB} & \textbf{Testiranje} & \textbf{Odstotek točk [\%]} & \textbf{Število točk}\\
       \hline
       \hline
-      PostgreSQL & 413 & 100 & 50\\
-      Microsoft SQL Server & 633 & 65,2 & 32,6 \\
-      MySql & 1704 & 24,2 & 12,1 \\
+      MariaDB & 118 & 100 & 50 \\
+      PostgreSQL & 362 & 32,4 & 16,2\\
+      Microsoft SQL Server & 518 & 22,7 & 11,2 \\
+      MySql & 1704 & 6,5 & 3,4 \\
       \hline
    \end{tabular}
 \end{center}
 
+V tem testu se je prvič videla moč predpomnjenja, ki ga uporablja MariaDB, ki si shranjuje rezultate poizvedbe.
+Baza naslednjič servira že predpomnjene podatke in ne izvaja SQL poizvedbe ponovno. To je uporabno predvsem v podatkovnih bazah, kjer
+je pogostejše branje iz baze, kot je pisanje v njo.
+
+\pagebreak
+\subsection{Uporaba funkcij \textit{COUNT, MAX, MIN, AVG}}
+Test se je izvedel desetkrat, avtomatsko z uporabo Python skripte \textit{poizvedbe.py} za vse štiri podatkovne baze.
+
+\paragraph{SQL poizvedba}
+Poizvedba izpiše število opravljenih preiskav, z minimalno, maksimalno in povprečno vrednostjo, kjer
+je število izvedb večje od 200 in je povprečna vrednost večja od polovice maksiamlne vrednosti.
+\begin{lstlisting}[language = SQL]
+Select 
+   ime_preiskave, 
+   count(vrednost), 
+   min(vrednost), 
+   max(vrednost), 
+   avg(vrednost)
+from izvid
+group by ime_preiskave
+having 
+   count(vrednost) > 200 and 
+   avg(vrednost) * 2 <= max(vrednost)
+order by count(vrednost) desc, ime_preiskave asc
+\end{lstlisting}
+
+\begin{center}
+   \begin{tabular}{||c|c|c|c||}
+      \hline
+      \textbf{SUPB} & \textbf{Najboljši [ms]} & \textbf{Najslabši [ms]} & \textbf{Povprečje [ms]}\\
+      \hline
+      \hline
+      MariaDB & 1 & 622 & 63 \\
+      PostgreSQL & 237 & 307 & 362 \\
+      Microsoft SQL Server & 230 & 316 & 265 \\
+      MySql & 898 & 984 & 927\\
+      \hline
+   \end{tabular}
+\end{center}
+
+\begin{center}
+   \begin{tabular}{||c|c|c|c||}
+      \hline
+      \textbf{SUPB} & \textbf{Testiranje} & \textbf{Odstotek točk [\%]} & \textbf{Število točk}\\
+      \hline
+      \hline
+      MariaDB & 118 & 100 & 50 \\
+      PostgreSQL & 362 & 24,9 & 12,5\\
+      Microsoft SQL Server & 518 & 23,7 & 11,8 \\
+      MySql & 1704 & 6,8 & 3,4 \\
+      \hline
+   \end{tabular}
+\end{center}
+
+Zopet ima veliko prednost MariaDB, predvsem zaradi predpomnjenja, v kolikor le tega ne bi uporabljali (ali bi se med branji zgodilo novo pisanje) bi čas poizvedbe bil primerjiv najslabšemu rezultatu v testiranju,
+
+\pagebreak
+\subsection{Gnezdene SQL poizvedbe}
+Test se je izvedel desetkrat, avtomatsko z uporabo Python skripte \textit{poizvedbe.py} za vse štiri podatkovne baze.
+
+\paragraph{SQL poizvedba}
+Poizvedba poišče vse diagnoze v katerih se nahaja ključna beseda, v gnezdenih skriptah pridobimo
+najmaljšo, najstarejšo in povprečno starost pacientov z iskano diagnozo.
+
+\begin{lstlisting}[language = SQL]
+   select m.si_naziv, count(o.st_obravnave) as Stevilo,
+   (
+       select min(p1.starost)
+           from
+               pacient p1,
+               obravnava o1,
+               diagnoza d1,
+               MKB_koda m1
+           Where
+               p1.kzz = o1.kzz and
+               d1.st_obravnave = o1.st_obravnave and
+               d1.icd_diagnoze = m1.koda and
+               m1.si_naziv = m.si_naziv
+   ) as min,
+   (
+       select max(p1.starost)
+           from
+               pacient p1,
+               obravnava o1,
+               diagnoza d1,
+               MKB_koda m1
+           Where
+               p1.kzz = o1.kzz and
+               d1.st_obravnave = o1.st_obravnave and
+               d1.icd_diagnoze = m1.koda and
+               m1.si_naziv = m.si_naziv
+   ) as max,
+   (
+       Select avg(p1.starost)
+           from
+               pacient p1,
+               obravnava o1,
+               diagnoza d1,
+               MKB_koda m1
+           Where
+               p1.kzz = o1.kzz and
+               d1.st_obravnave = o1.st_obravnave and
+               d1.icd_diagnoze = m1.koda and
+               m1.si_naziv = m.si_naziv
+   ) as povprecje
+from pacient p
+   inner join obravnava o 
+      on p.kzz = o.kzz
+   Inner join diagnoza d 
+      on o.st_obravnave = d.st_obravnave
+   inner join MKB_koda m 
+      on m.koda = d.icd_diagnoze
+   inner join izvid i 
+      on d.st_obravnave = i.st_obravnave
+   inner join preiskava p2 
+      on i.ime_preiskave = p2.ime_preiskave
+   where
+       p.starost between 21 and 40 and
+       m.si_naziv like '%tr_en%'
+   group by m.si_naziv, p.starost
+   order by count(o.st_obravnave) desc
+\end{lstlisting}
+
+\begin{center}
+   \begin{tabular}{||c|c|c|c||}
+      \hline
+      \textbf{SUPB} & \textbf{Najboljši [ms]} & \textbf{Najslabši [ms]} & \textbf{Povprečje [ms]}\\
+      \hline
+      \hline
+      Microsoft SQL Server & 374 & 568 & 407 \\
+      PostgreSQL & 7045 & 7243 & 7100 \\
+      MariaDB & 1 & 164 669 & 16 468 \\
+      MySql & 139 951 & 144 340 & 141 129\\
+      \hline
+   \end{tabular}
+\end{center}
+
+\begin{center}
+   \begin{tabular}{||c|c|c|c||}
+      \hline
+      \textbf{SUPB} & \textbf{Testiranje} & \textbf{Odstotek točk [\%]} & \textbf{Število točk}\\
+      \hline
+      \hline
+      Microsoft SQL Server & 407 & 100 & 50 \\
+      PostgreSQL & 7100 & 5,8 & 2,9\\
+      MariaDB & 16 486 & 2,4 & 1,2 \\
+      MySql & 1704 & ~0,1 & 0,1 \\
+      \hline
+   \end{tabular}
+\end{center}
+
+Test preverja predvsem hitrost izvedbe gnezdenih SQL poizvedb in primerjave nizov znakov. 
+Izkaže se, da Microsoft SQL server uporablja veliko bolj optimizirano proceduro za izvajanje takšne poizvedbe. Hkratu
+se zopet izkaže kakšno moč ima predpomnjenje, ki ga uporablja MariaDB, vendar je ob tem potrebno predpostaviti, da se
+med samimi bralnimi poizvedbami ne izvede pisanje (nov zapis ali posodabljanje), zaradi česar bi predpomnjen rezultat postal neveljaven.
+
+\section{Posodabljanje zapisov v podatkovni bazi}
+
+\paragraph{SQL poizvedba}
+Poizvedba poišče vse diagnoze v katerih se nahaja ključna beseda, v gnezdenih skriptah pridobimo
+najmaljšo, najstarejšo in povprečno starost pacientov z iskano diagnozo.
+
+\begin{lstlisting}[language = SQL]
+update preiskava
+   set min_z = min_m, max_z = max_m
+where min_z is null and max_z is null
+\end{lstlisting}
+
+\begin{center}
+   \begin{tabular}{||c|c|c|c||}
+      \hline
+      \textbf{SUPB} & \textbf{Vstavljanje [ms]} & \textbf{Commit [ms]} & \textbf{Skupaj [ms]}\\
+      \hline
+      \hline
+      MySql & 3 & 2 & 5\\
+      Microsoft SQL Server & 7 & 3 & 10 \\
+      PostgreSQL & 11 & 10 & 21 \\
+      MariaDB & 15 & 9 & 24 \\
+      \hline
+   \end{tabular}
+\end{center}
+
+\begin{center}
+   \begin{tabular}{||c|c|c|c||}
+      \hline
+      \textbf{SUPB} & \textbf{Testiranje} & \textbf{Odstotek točk [\%]} & \textbf{Število točk}\\
+      \hline
+      \hline
+      MySql & 5 & 100 & 50 \\
+      Microsoft SQL Server & 10 & 50 & 25 \\
+      PostgreSQL & 21 & 23,8 & 11,9\\
+      MariaDB & 24 & 20,8 & 10,4 \\
+      \hline
+   \end{tabular}
+\end{center}
+
+\chapter{Zaključek}
+
+\section{Seštevek točk performančnih testov}
+
+\begin{center}
+   \begin{tabular}{||c|c|c|c|c||}
+      \hline
+      \textbf{Test} & \textbf{MSSQL Server} & \textbf{MariaDB} & \textbf{PostgreSQL} & \textbf{MySQL}\\
+      \hline
+      \hline
+      Vstavljanje & 20,3 & 25 & 23,5 & 19,4\\
+      Brisanje & 25 & 11,5 & 18,2 & 5,1\\
+      Branje 1 & 50 & 18,4 & 13,8 & 23,5\\
+      Branje 2 & 11,2 & 50 & 16,2 & 3,4\\
+      Branje 3 & 11,8 & 50 & 12,5 & 3,4\\
+      Branje 4 & 50 & 1,2 & 2,9 & 0,1\\
+      Posodabljanje & 25 & 10,4 & 11,9 & 50\\
+      \hline
+      \hline
+      \textbf{Vsota} & 193,3 & 166,5 & 99 & 104,9\\
+      \hline
+   \end{tabular}
+\end{center}
+
+\paragraph{Razumevanje rezultatov performančnih testov}
+Izvedeni testi v okviru seminarkse naloge zagotavljajo primerjivo testno okolje za vse podatkovne baze,
+vendar ne zagotavljajo optimalne konfiguracije baz. Ravno tako v testih niso uporabljene poseben inačice SQL jezika,
+ampak se (kjer je to mogoče) uporablja splošno sprejeta oblika SQL jezika \textit{(ne uporablja se posebnih ukazov kot so INSERT IGNORE ali BULK INSERT)},
+ravno tako so rezultati močno podvrženi sistematičnsti testov, ki omogočajo višjo performanso podatkovnih baz z vgrajenim predpomnjenjem (izrazito MariaDB).
+
+\pagebreak
+\section{Izbira SQL podatkovne baze}
+Dasiravno je in tudi bo izbira podatkovne baze odvisna od želja in izkušenj programerjev, naročnikov in uporabnikov informacijske rešitve,
+lahko iz performančnih testov potegnemo nekaj zaključkov.
+
+\subsection{Microsoft SQL Server}
+Microsoft SQL Server ima izmed 4 testiranih najboljšo performanco, saj je poleg hitrega vstavljanja in brisanja,
+povprečno hiter tudi pri vstavljanju podatkov v tabelo. Najboljšo optimiziranost pa zagotavlja tudi pri branju podatkov
+z uporabo gnezdenih SQL poizvedb in poizvedb z uporabo agregatnih funkcij, brez prevelikega zanašanja na predpomnjenje.
+
+Največja težava MSSQL Serverja je njegov SQL jezik, ki se predvsem pri kreiranju in brisanju tabel močno razlikuje od ostalih testiranih.
+V velikem produkcijskem okolju moramo tudi predvideti možnost, da brezplačna verzija ne bo omogočala dovolj funkcij, ki so potrebne pri takšni vrsti sistemov.
+
+\subsection{MySQL}
+Čeprav je MySQL "de-facto" standard v industriji se je (presenetljivo) izkazal za najmanj optimiziranega.
+Edina kategorija v kateri je izstopal je bila posodabljanje podatkov. 
+
+Pri naslednjem projektu, je zato mogoče bolje razmisliti o smiselni alternativi.
+
+\subsection{MariaDB}
+MariaDB je pogostokrat označena kot mlajša sestra MySQL (kar tudi je), vendar se je v testih izkazala kot boljša alternativa, saj je konstantno dosegala performančno boljše rezultate.
+\\\\
+Zaradi svojega velikega zanašanja na predpomnilnik je najboljša izbira za baze, kjer se zapisi dogajajo dokaj redko, veliko pa je ponovljivih branj.
+Zaradi pododbnosti zgradbe z MySQL je prehod med eno in drugo instanten, saj uporabljata (večino) enake gonilnike kakor
+tudi SQL jezik.
+
+\subsection{PostgreSQL}
+PostgreSQL se izkaže za nekoliko slabšo alternativo vsem zgoraj omenjenim podatkovnim bazam, vendar vseeno zagotavlja povprečno performanco.
+\\\\
+PostgreSQL lahko predstavlja odprtokodno alternativo MySQL/MariaDB in je ravno zaradi svoje "objektne-orientacije" pogosto smiselna podporna baza za aplikacije spisane v objektno-orientiranem modelu.
+
+\section{Zaključek}
+Izbira SUPB-ja bo še naprej ostala primarno odvisna od kompetenc naročnika-izvajalca, vendar se vseeno zdi, da ima vsaka podatkovna baza svoje prednosti in slabosti, ki niso nujno povezane (samo) z golo performanco.
+\\\\
+Programerji pa si lahko kot izziv vedno znova pri svojih projektih izbirajo drugo rešitev, ki jim omogoča, da spoznajo alternative kakor tudi možnosti, ki jih alternative ponujajo.
 
 \end{document}
