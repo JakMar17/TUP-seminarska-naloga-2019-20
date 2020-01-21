@@ -1,0 +1,32 @@
+% On découpe ce document complexe en plusieurs sous-fichiers séparés.
+% Cela permettra notamment de réarranger les transparents facilement 
+% lors de l'élaboration du document.
+
+% La définition de la classe beamer avec tous les styles afférents
+
+\RequirePackage{currfile} 
+
+\documentclass{beamer}
+
+\input{preambule/special_beamer.tex}
+
+% Les autres packages utiles  notamment pour le français, les accents ou Python
+\input{preambule/autres_packages.tex}
+% Les macros et raccourcis personnels
+\input{preambule/macros.tex}
+
+% On définit le titre et l'auteur du document
+
+% L'argument optionnel (entre crochets) donne le titre qui sera mis sur chaque slide
+\title[TIPE Mercure]{TIPE: Précession du Périhélie de Mercure}
+\author{Jean-Julien \textsc{Fleck}} % Votre nom
+% L'épreuve (car on n'a pas le droit de signaler sa provenance à un concours) (là encore, l'argument optionnel apparaît sur chaque slide)
+\institute[TIPE]{Épreuve de TIPE}
+\date{Session 2019} 
+
+% On démarre le document proprement dit
+\begin{document}
+
+\input{slides\\00_prva.tex}
+
+\end{document}

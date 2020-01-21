@@ -485,31 +485,33 @@ td_mssql = ["MS SQL brisanje"]
 
 def testiraj(x):
     for i in range(x):
-        print("\n\n" + str(i+1))
-
-        t_mssql.append(napolniBazo_MsSQL())
-
-        print("\n")
-
-        t_mysql.append(napolniBazo_MySql())
-
-        print("\n")
-
-        t_postgres.append(napolniBazo_Postgres())
-
-        print("\n")
-
+        print("tukaj")
         td_mssql.append(izprazniBazo(mssql_cursor, mssql_connection, dobiImenaTabel(mssql_cursor, mssql_query)))
         td_mysql.append(izprazniBazo(mysql_cursor, mysql_connection, dobiImenaTabel(mysql_cursor, mysql_query)))
         td_postgres.append(izprazniBazo(postgres_cursor, postgres_connection, dobiImenaTabel(postgres_cursor, postgres_query)))
+        td_postgres.append(izprazniBazo(mariadb_cursor, mariadb_connection, dobiImenaTabel(mariadb_cursor, mysql_query)))
 
+        print("\n\n" + str(i+1))
 
-    t_mssql.append(napolniBazo_MsSQL())
-    print("\n")
-    t_mysql.append(napolniBazo_MySql())
-    print("\n")
-    t_postgres.append(napolniBazo_Postgres())
-    print("\n")
+        napolniBazo_mariadb()
+
+        print("\n")
+
+        napolniBazo_MsSQL()
+        #t_mssql.append(napolniBazo_MsSQL())
+
+        print("\n")
+
+        napolniBazo_MySql()
+        #t_mysql.append(napolniBazo_MySql())
+
+        print("\n")
+
+        napolniBazo_Postgres()
+        #t_postgres.append(napolniBazo_Postgres())
+
+        print("\n")
+
 
     print(".....................")
     print("Vstavljanje MySql: " + str(t_mysql))
@@ -571,7 +573,7 @@ def napolniBazo_mariadb():
     print("%.5f" % skupenCas)
     return skupenCas
 
-#testiraj(2)
+testiraj(1)
 
-izprazniBazo(mariadb_cursor, mariadb_connection, dobiImenaTabel(mariadb_cursor, mysql_query))
-napolniBazo_mariadb()
+#izprazniBazo(mariadb_cursor, mariadb_connection, dobiImenaTabel(mariadb_cursor, mysql_query))
+#napolniBazo_mariadb()

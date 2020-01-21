@@ -41,11 +41,17 @@ glede na dosedanje izkušnje pri delu s SUPB-ji ali glede na poslovna pravila do
 \paragraph{}
 Odločitev je pogosto sprejeta s predpostavko, da večina rešitev za upravljanje s podatki omogoča primerjivo performanco.
 V seminarski nalogi, ki je nastala v okviru predmeta Tehnologija upravljanja podatkov, želim preveriti to predpostavko s testiranje primerjivih operacij v različnih SUPB-jih.
+
+\paragraph{}
+Vsi testi v nadaljevanju te seminarske naloge temeljijo na predpostavki, da razvijalca nekega sistema ne zanima optimizacija na ravni podatkovne baze.
+Zaradi tega se nastavitev testiranih baz pred začetkom testa ni spreminjalo, uporabljalo pa se je zgolj osnovno SQL sintakso (in ne posebnih SQL ukazov, ki so prisotni
+pri nekaterih SUPB-jih in lahko omogočajo bolj optimizirane operacije, primer \textit{BULK INSERT} pri MSSQL Server). 
+Ravno tako so testi narejeni na predpostavki, da ima SUPB na voljo dovolj zmogljivo strojno arhitekturo in ni omejen z delovnim pomnilnikom ali CPU.
 \pagebreak
 
 \chapter{Način testiranja}
 \section{Izbrani SUPB}
-Testiranje se bo izvajalo na štirih prosto dostopnih podatkovnih bazah: MySQL, MariaDB, PostgreSQL in Micorsoft SQL Server.
+Testiranje se bo izvajalo na štirih prosto dostopnih podatkovnih bazah: MySQL, MariaDB, PostgreSQL in Micorsoft SQL Server Express \textit{(v nadaljevanju Microsoft SQL Server, MSSQL Server)}.
 \\\\
 Vse štiri podatkovne baze se bodo izvajale istočasno na Dockerju.
 
@@ -76,7 +82,7 @@ docker run --name tup-sem-postgres
    
 Baza je dostopna na naslovu http://localhost:7200
 
-\subsection{Microsoft SQL Server}
+\subsection{Microsoft SQL Server Express}
 \begin{lstlisting}
 docker run -e 'ACCEPT_EULA=Y' --name tup-sem-mssql 
    -e 'SA_PASSWORD=root_ROOT' -p 7201:1433 
@@ -84,8 +90,6 @@ docker run -e 'ACCEPT_EULA=Y' --name tup-sem-mssql
 \end{lstlisting}
    
 Baza je dostopna na naslovu http://localhost:7201.
-
-
 
 \section{Način poganjanja podatkovne baze}
 Podatkovna baza je bila nameščena in se je izvajala na računalniku s sledečimi specifikacijami:
@@ -95,7 +99,7 @@ Podatkovna baza je bila nameščena in se je izvajala na računalniku s sledeči
         \hline
         Procesor & Intel Core i7-8705G 3.10GHz\\
         \hline
-        Delovni pomnilnik & 16 GB\\
+        Delovni pomnilnik (od tega Docker) & 16 GB (6,31GB)\\
         \hline
         Virtualni delovni pomnilnik & 28,9 GB\\
         \hline
@@ -116,10 +120,11 @@ Podatkovna baza je bila nameščena in se je izvajala na računalniku s sledeči
     \end{tabular}
 \end{center}
 \paragraph{}
+\pagebreak
 
 \section{Način točkovanja testiranja in vrste testov}
 
-Vsak test se točkuje z določenim število točk pri čemer je maksimalno število točk določeno po ključu, kjer je glavni faktor pogostost izvajanja določene operacije v realnem svetu \textit{(primer: zdravstveni dom)}.
+Vsak test se točkuje z določenim številom točk pri čemer je maksimalno število točk določeno po ključu, kjer je glavni faktor pogostost izvajanja določene operacije v realnem svetu \textit{(primer: zdravstveni dom)}.
 \\\\
 Testira se vse vidike operacij nad podatki podatkovne baze, katere izvajamo v okviru \textit{CRUD (Create, Read, Update, Delete)} operacij.
 
@@ -184,7 +189,7 @@ Skripta za ustvarjanje podatkovne baze je shranjena v datoteki \textit{\underlin
 V podatkovno bazo se je vstavilo skupaj 1 028 883 zapisov. Vstavljanje je potekalo prek Python skripte filanje.py po postopku: 
 
 \begin{enumerate}
-   \item Iz csv (coma seperated values) datoteke je program prebral vrstico, jo razdeli in pretvoril v pravilen zapis spremelnjivke (s pomočjo vgrajenih ali pomožnih funkcij)
+   \item Iz csv (coma seperated values) datoteke je program prebral vrstico, jo razdelil in pretvoril v pravilen zapis spremenljivke (s pomočjo vgrajenih ali pomožnih funkcij)
    \item Program shrani trenutni sistemski čas
    \item Program izvede INSERT
    \item Program od trenutnega sistemskega časa odšteje sistemski čas iz točke 3 in ga prišeje k števcu skupnega časa 
@@ -199,13 +204,13 @@ Pri obdelavi rezultatov se najboljši in najslabši čas nista upoštevala, iz o
 \begin{center}
    \begin{tabular}{||c|c|c|c||}
       \hline
-      \textbf{SUPB} & \textbf{Najboljši čas [s]} & \textbf{Najslabši čas [s]} & \textbf{Povprečje [s]} \\
+      \textbf{SUPB} & \textbf{Najboljši čas [s]} & \textbf{Najslabši čas [s]} & \textbf{Standardni odklon} \\
       \hline
       \hline
-      MariaDB & 482,683 & 563,107 & 488,029 \\
-      PostgreSQL & 512,716 & 520,791 & 515,921 \\
-      Microsoft SQL Server & 592,745 & 608,040 & 596,453 \\
-      MySQL & 619,255 & 630,775 & 623,806\\
+      MariaDB & 482,683 & 563,107 & 5,792 \\
+      PostgreSQL & 512,716 & 520,791 & 2,170 \\
+      Microsoft SQL Server & 592,745 & 608,040 & 4,557 \\
+      MySQL & 619,255 & 630,775 & 5,792\\
       \hline
    \end{tabular}
 \end{center}
@@ -217,7 +222,7 @@ Iz zgoraj navedenih rezultatov se, kot je zapisano v sekciji 1.4.1, določi toč
 \begin{center}
    \begin{tabular}{||c|c|c|c||}
       \hline
-      \textbf{SUPB} & Rezultat testiranja[ms] & Odstotek točk [\%] & Število točk\\
+      \textbf{SUPB} & Povprečje [ms] & Odstotek točk [\%] & Število točk\\
       \hline
       \hline
       MariaDB & 484 050 & 100 & 25\\
@@ -234,8 +239,7 @@ Brisanje podatkov je potekalo avtomatsko z uporabo Python skripte \textit{filanj
 
 Testiranje je potekalo po naslednjem postopku:
 \begin{enumerate}
-   \item Program za izvede ukaz s katerim pridobi imena vseh tabel v podatkovni bazi
-   \item Program za vsako izmed tabel izvede:
+   \item Program izvede ukaz s katerim pridobi imena vseh tabel v podatkovni bazi
       \item Program shrani trenutni sistemski čas
       \item Program izvede ukaz \textit{DELETE FROM |ime-tabele|}
       \item Program od trenutnega sistemskega časa odšteje shranjen čas
@@ -247,7 +251,7 @@ Rezultati izračunani iz povprečja so naslednji:
 \begin{center}
    \begin{tabular}{||c|c|c|c||}
       \hline
-      \textbf{SUPB} & \textbf{Testiranje [ms]} & \textbf{Odstotek točk [\%] } & \textbf{Število točk}\\
+      \textbf{SUPB} & \textbf{Povprečje [ms]} & \textbf{Odstotek točk [\%] } & \textbf{Število točk}\\
       \hline
       \hline
       Microsoft SQL Server & 1087 & 100 & 25\\
@@ -310,10 +314,10 @@ Test se je izvedel desetkrat, avtomatsko z uporabo Python skripte \textit{poizve
       \textbf{SUPB} & \textbf{Najboljši [ms]} & \textbf{Najslabši [ms]} & \textbf{Povprečje [ms]}\\
       \hline
       \hline
-      Microsoft SQL Server & 312 & 361 & 334 \\
-      MySql & 701 & 838 & 725 \\
-      PostgreSQL & 879 & 1040 & 925\\
-      MariaDB & 1188 & 1374 & 1237 \\
+      Microsoft SQL Server & 312 & 361 & 0,016 \\
+      MySql & 701 & 838 & 0,038 \\
+      PostgreSQL & 879 & 1040 & 0,058\\
+      MariaDB & 1188 & 1374 & 0,057 \\
       \hline
    \end{tabular}
 \end{center}
@@ -323,17 +327,18 @@ Primerjava hitrsoti izvedbe SQL stavka z uporabo \textit{INNER JOIN}
 \begin{center}
    \begin{tabular}{||c|c|c|c||}
       \hline
-      \textbf{SUPB} & \textbf{Najboljši [ms]} & \textbf{Najslabši [ms]} & \textbf{Povprečje [ms]}\\
+      \textbf{SUPB} & \textbf{Najboljši [ms]} & \textbf{Najslabši [ms]} & \textbf{Standardni odklon}\\
       \hline
       \hline
-      Microsoft SQL Server & 303 & 375 & 336 \\
-      MySql & 702 & 729 & 710 \\
-      PostgreSQL & 885 & 973 & 909\\
-      MariaDB & 1204 & 1223 & 1212 \\
+      Microsoft SQL Server & 303 & 375 & 0,021 \\
+      MySql & 702 & 729 & 0,026 \\
+      PostgreSQL & 885 & 973 & 0,005\\
+      MariaDB & 1204 & 1223 & 0,008 \\
       \hline
    \end{tabular}
 \end{center}
 Primerjava hitrsoti izvedbe SQL stavka z uporabo \textit{WHERE}
+
 \pagebreak
 Razlike med hitrostjo poizvedb pri uporabi \textit{WHERE} in \textit{INNER JOIN} so pri vseh štirih bazah zanemarljive:
 
@@ -358,7 +363,7 @@ ga torej štejemo kot eno postavko izračuna točk, pri čemer se upošteva bolj
 \begin{center}
    \begin{tabular}{||c|c|c|c||}
       \hline
-      \textbf{SUPB} & \textbf{Testiranje} & \textbf{Odstotek točk [\%]} & \textbf{Število točk}\\
+      \textbf{SUPB} & \textbf{Povprečje [ms]} & \textbf{Odstotek točk [\%]} & \textbf{Število točk}\\
       \hline
       \hline
       Microsoft SQL Server & 334 & 100 & 50 \\
@@ -370,7 +375,7 @@ ga torej štejemo kot eno postavko izračuna točk, pri čemer se upošteva bolj
 \end{center}
 
 \subsection{Uporaba funkcije \textit{COUNT} v povezanih tabelah in predpomnjenje}
-Test se je izvedel desetkrat, avtomatsko z uporabo Python skripte \textit{poizvedbe.py} za vse tri podatkovne baze.
+Test se je izvedel desetkrat, avtomatsko z uporabo Python skripte \textit{poizvedbe.py} za vse štiri podatkovne baze.
 
 \paragraph{SQL poizvedba}
 Poizvedba izpiše ime preiskave in število izvidov, katerih vrednost je višja od priporočene vrednosti glede na spol.
@@ -401,13 +406,13 @@ order by count(i.ime_preiskave) desc
 \begin{center}
    \begin{tabular}{||c|c|c|c||}
       \hline
-      \textbf{SUPB} & \textbf{Najboljši [ms]} & \textbf{Najslabši [ms]} & \textbf{Povprečje [ms]}\\
+      \textbf{SUPB} & \textbf{Najboljši [ms]} & \textbf{Najslabši [ms]} & \textbf{Standardni odklon}\\
       \hline
       \hline
-      MariaDB & 1 & 1166 & 118 \\
-      PostgreSQL & 314 & 416 & 362 \\
-      Microsoft SQL Server & 490 & 584 & 518 \\
-      MySql & 1534 & 2567 & 1784\\
+      MariaDB & 1 & 1166 & 0,350 \\
+      PostgreSQL & 314 & 416 & 0,034 \\
+      Microsoft SQL Server & 490 & 584 & 0,028 \\
+      MySql & 1534 & 2567 & 0,379\\
       \hline
    \end{tabular}
 \end{center}
@@ -415,7 +420,7 @@ order by count(i.ime_preiskave) desc
 \begin{center}
    \begin{tabular}{||c|c|c|c||}
       \hline
-      \textbf{SUPB} & \textbf{Testiranje} & \textbf{Odstotek točk [\%]} & \textbf{Število točk}\\
+      \textbf{SUPB} & \textbf{Povprečje [ms]} & \textbf{Odstotek točk [\%]} & \textbf{Število točk}\\
       \hline
       \hline
       MariaDB & 118 & 100 & 50 \\
@@ -436,7 +441,7 @@ Test se je izvedel desetkrat, avtomatsko z uporabo Python skripte \textit{poizve
 
 \paragraph{SQL poizvedba}
 Poizvedba izpiše število opravljenih preiskav, z minimalno, maksimalno in povprečno vrednostjo, kjer
-je število izvedb večje od 200 in je povprečna vrednost večja od polovice maksiamlne vrednosti.
+je število izvedb večje od 200 in je povprečna vrednost večja od polovice maksimalne vrednosti.
 \begin{lstlisting}[language = SQL]
 Select 
    ime_preiskave, 
@@ -455,13 +460,13 @@ order by count(vrednost) desc, ime_preiskave asc
 \begin{center}
    \begin{tabular}{||c|c|c|c||}
       \hline
-      \textbf{SUPB} & \textbf{Najboljši [ms]} & \textbf{Najslabši [ms]} & \textbf{Povprečje [ms]}\\
+      \textbf{SUPB} & \textbf{Najboljši [ms]} & \textbf{Najslabši [ms]} & \textbf{Standardni odklon}\\
       \hline
       \hline
-      MariaDB & 1 & 622 & 63 \\
-      PostgreSQL & 237 & 307 & 362 \\
-      Microsoft SQL Server & 230 & 316 & 265 \\
-      MySql & 898 & 984 & 927\\
+      MariaDB & 1 & 622 & 0,186 \\
+      PostgreSQL & 237 & 307 & 0,020 \\
+      Microsoft SQL Server & 230 & 316 & 0,028 \\
+      MySql & 898 & 984 & 0,029\\
       \hline
    \end{tabular}
 \end{center}
@@ -469,13 +474,13 @@ order by count(vrednost) desc, ime_preiskave asc
 \begin{center}
    \begin{tabular}{||c|c|c|c||}
       \hline
-      \textbf{SUPB} & \textbf{Testiranje} & \textbf{Odstotek točk [\%]} & \textbf{Število točk}\\
+      \textbf{SUPB} & \textbf{Povprečje [ms]} & \textbf{Odstotek točk [\%]} & \textbf{Število točk}\\
       \hline
       \hline
-      MariaDB & 118 & 100 & 50 \\
-      PostgreSQL & 362 & 24,9 & 12,5\\
-      Microsoft SQL Server & 518 & 23,7 & 11,8 \\
-      MySql & 1704 & 6,8 & 3,4 \\
+      MariaDB & 63 & 100 & 50 \\
+      Microsoft SQL Server & 265 & 23,7 & 11,9 \\
+      PostgreSQL & 362 & 17,4 & 8,7\\
+      MySql & 927 & 6,7 & 3,4 \\
       \hline
    \end{tabular}
 \end{center}
@@ -483,7 +488,7 @@ order by count(vrednost) desc, ime_preiskave asc
 Zopet ima veliko prednost MariaDB, predvsem zaradi predpomnjenja, v kolikor le tega ne bi uporabljali (ali bi se med branji zgodilo novo pisanje) bi čas poizvedbe bil primerjiv najslabšemu rezultatu v testiranju,
 
 \pagebreak
-\subsection{Gnezdene SQL poizvedbe}
+\subsection{Korelirane gnezdene SQL poizvedbe}
 Test se je izvedel desetkrat, avtomatsko z uporabo Python skripte \textit{poizvedbe.py} za vse štiri podatkovne baze.
 
 \paragraph{SQL poizvedba}
@@ -552,13 +557,13 @@ from pacient p
 \begin{center}
    \begin{tabular}{||c|c|c|c||}
       \hline
-      \textbf{SUPB} & \textbf{Najboljši [ms]} & \textbf{Najslabši [ms]} & \textbf{Povprečje [ms]}\\
+      \textbf{SUPB} & \textbf{Najboljši [ms]} & \textbf{Najslabši [ms]} & \textbf{Standardni odklon}\\
       \hline
       \hline
-      Microsoft SQL Server & 374 & 568 & 407 \\
-      PostgreSQL & 7045 & 7243 & 7100 \\
-      MariaDB & 1 & 164 669 & 16 468 \\
-      MySql & 139 951 & 144 340 & 141 129\\
+      Microsoft SQL Server & 374 & 568 & 0,058 \\
+      PostgreSQL & 7045 & 7243 & 0,064 \\
+      MariaDB & 1 & 164 669 & 49,400 \\
+      MySql & 139 951 & 144 340 & 1,209 \\
       \hline
    \end{tabular}
 \end{center}
@@ -566,7 +571,7 @@ from pacient p
 \begin{center}
    \begin{tabular}{||c|c|c|c||}
       \hline
-      \textbf{SUPB} & \textbf{Testiranje} & \textbf{Odstotek točk [\%]} & \textbf{Število točk}\\
+      \textbf{SUPB} & \textbf{Povprečje [ms]} & \textbf{Odstotek točk [\%]} & \textbf{Število točk}\\
       \hline
       \hline
       Microsoft SQL Server & 407 & 100 & 50 \\
@@ -585,8 +590,7 @@ med samimi bralnimi poizvedbami ne izvede pisanje (nov zapis ali posodabljanje),
 \section{Posodabljanje zapisov v podatkovni bazi}
 
 \paragraph{SQL poizvedba}
-Poizvedba poišče vse diagnoze v katerih se nahaja ključna beseda, v gnezdenih skriptah pridobimo
-najmaljšo, najstarejšo in povprečno starost pacientov z iskano diagnozo.
+Poizvedba za vsako preiskavo, kjer je referenčna vrednost ženskega spola \textit{NULL} posodobi le-to vrednost, na referenčno vrednost za moške.
 
 \begin{lstlisting}[language = SQL]
 update preiskava
@@ -611,7 +615,7 @@ where min_z is null and max_z is null
 \begin{center}
    \begin{tabular}{||c|c|c|c||}
       \hline
-      \textbf{SUPB} & \textbf{Testiranje} & \textbf{Odstotek točk [\%]} & \textbf{Število točk}\\
+      \textbf{SUPB} & \textbf{Povprečje [ms]} & \textbf{Odstotek točk [\%]} & \textbf{Število točk}\\
       \hline
       \hline
       MySql & 5 & 100 & 50 \\
@@ -621,6 +625,9 @@ where min_z is null and max_z is null
       \hline
    \end{tabular}
 \end{center}
+
+Enostavno posodabljanje se izkaže za hitro operacijo. Še enkrat znova vidimo, da so vse podatkovne baze približno enako (dobro) optimizirane za izvajanje enostavnih poizvedb/operacij. Razlike se pojavljajo šele pri večji količini podatkov in/ali bolj kompliciranih poizvedbah.
+
 
 \chapter{Zaključek}
 
@@ -636,21 +643,39 @@ where min_z is null and max_z is null
       Brisanje & 25 & 11,5 & 18,2 & 5,1\\
       Branje 1 & 50 & 18,4 & 13,8 & 23,5\\
       Branje 2 & 11,2 & 50 & 16,2 & 3,4\\
-      Branje 3 & 11,8 & 50 & 12,5 & 3,4\\
+      Branje 3 & 11,9 & 50 & 8,7 & 3,4\\
       Branje 4 & 50 & 1,2 & 2,9 & 0,1\\
       Posodabljanje & 25 & 10,4 & 11,9 & 50\\
       \hline
       \hline
-      \textbf{Vsota} & 193,3 & 166,5 & 99 & 104,9\\
+      \textbf{Vsota} & 193,4 & 166,5 & 94,9 & 104,9\\
       \hline
    \end{tabular}
 \end{center}
 
 \paragraph{Razumevanje rezultatov performančnih testov}
 Izvedeni testi v okviru seminarkse naloge zagotavljajo primerjivo testno okolje za vse podatkovne baze,
-vendar ne zagotavljajo optimalne konfiguracije baz. Ravno tako v testih niso uporabljene poseben inačice SQL jezika,
+vendar ne zagotavljajo optimalne konfiguracije baz. Ravno tako v testih niso uporabljene posebne inačice SQL jezika,
 ampak se (kjer je to mogoče) uporablja splošno sprejeta oblika SQL jezika \textit{(ne uporablja se posebnih ukazov kot so INSERT IGNORE ali BULK INSERT)},
-ravno tako so rezultati močno podvrženi sistematičnsti testov, ki omogočajo višjo performanso podatkovnih baz z vgrajenim predpomnjenjem (izrazito MariaDB).
+ravno tako so rezultati močno podvrženi sistematičnosti testov, ki omogočajo višjo performanso podatkovnih baz z vgrajenim predpomnjenjem (izrazito MariaDB).
+
+\pagebreak
+
+\section{Poraba sistemskih virov}
+Čeprav so bili testi izvedeni ob predpostavki, da ima SUPB dovolj zmogljivo strojno arhitekturo ter poraba sistemski virov ni vplivala na točkovanje, se je ob testiranju izvajal tudi monitoring porabe sistemskih virov.
+
+\subsection{Poraba CPU}
+V času, ko je izbrani SUPB izvajal transakcije, je bila CPU poraba izbrane docker slike višja, približno 50\% pri vseh testiranih.
+
+V času, ko izbran SUPB ni izvajal operacij, je bila CPU poraba izbrane docker slike zanemarljiva (do 5\%).
+
+\subsection{Poraba delovnega pomnilnika}
+Večje razlike se pojavijo pri uporabi delovnega pomnilnika, saj imajo različni SUPB-ji arzlične strategije uporabe.
+
+Najmanj delovnega pomnilnika (tako v času izvajanja operacij kot v času neizvajanja) porablja PostgreSQL, približno 10MB.
+Sledita mu MariaDB (350MB "mirovanje", 500MB v času izvajanja daljših operacij) in MySQL (500MB "mirovanje", 700MB v času izvajanja daljših operacij), daleč največ pomnilnika pa porabi Microsoft SQL Server s porabo približno 1,3GB v "mirovanju"  in 1,8GB v izvajanju večjih in daljših operacij (npr. vstavljanje).
+
+Vse porabe se bistveno ne spreminjajo od prve izvedene operacije po zagonu. Torej izbrani SUPB po zasedbi pomnilnika, le tega ne sprosti več (razlika je vidna samo pri MSSQL, kjer je poraba tako ali drugače izjemno velika).
 
 \pagebreak
 \section{Izbira SQL podatkovne baze}
@@ -659,14 +684,14 @@ lahko iz performančnih testov potegnemo nekaj zaključkov.
 
 \subsection{Microsoft SQL Server}
 Microsoft SQL Server ima izmed 4 testiranih najboljšo performanco, saj je poleg hitrega vstavljanja in brisanja,
-povprečno hiter tudi pri vstavljanju podatkov v tabelo. Najboljšo optimiziranost pa zagotavlja tudi pri branju podatkov
+povprečno hiter tudi pri pososdabljanju podatkov v tabelah. Najboljšo optimiziranost pa zagotavlja tudi pri branju podatkov
 z uporabo gnezdenih SQL poizvedb in poizvedb z uporabo agregatnih funkcij, brez prevelikega zanašanja na predpomnjenje.
 
 Največja težava MSSQL Serverja je njegov SQL jezik, ki se predvsem pri kreiranju in brisanju tabel močno razlikuje od ostalih testiranih.
 V velikem produkcijskem okolju moramo tudi predvideti možnost, da brezplačna verzija ne bo omogočala dovolj funkcij, ki so potrebne pri takšni vrsti sistemov.
 
 \subsection{MySQL}
-Čeprav je MySQL "de-facto" standard v industriji se je (presenetljivo) izkazal za najmanj optimiziranega.
+Čeprav je MySQL "de-facto"\ standard v industriji se je (presenetljivo) izkazal za najmanj optimiziranega.
 Edina kategorija v kateri je izstopal je bila posodabljanje podatkov. 
 
 Pri naslednjem projektu, je zato mogoče bolje razmisliti o smiselni alternativi.
@@ -675,13 +700,15 @@ Pri naslednjem projektu, je zato mogoče bolje razmisliti o smiselni alternativi
 MariaDB je pogostokrat označena kot mlajša sestra MySQL (kar tudi je), vendar se je v testih izkazala kot boljša alternativa, saj je konstantno dosegala performančno boljše rezultate.
 \\\\
 Zaradi svojega velikega zanašanja na predpomnilnik je najboljša izbira za baze, kjer se zapisi dogajajo dokaj redko, veliko pa je ponovljivih branj.
-Zaradi pododbnosti zgradbe z MySQL je prehod med eno in drugo instanten, saj uporabljata (večino) enake gonilnike kakor
+Zaradi podobnosti zgradbe z MySQL je prehod med eno in drugo instanten, saj uporabljata (večino) enake gonilnike kakor
 tudi SQL jezik.
+
+\pagebreak
 
 \subsection{PostgreSQL}
 PostgreSQL se izkaže za nekoliko slabšo alternativo vsem zgoraj omenjenim podatkovnim bazam, vendar vseeno zagotavlja povprečno performanco.
 \\\\
-PostgreSQL lahko predstavlja odprtokodno alternativo MySQL/MariaDB in je ravno zaradi svoje "objektne-orientacije" pogosto smiselna podporna baza za aplikacije spisane v objektno-orientiranem modelu.
+PostgreSQL je vseeno odlična izbira za sisteme, ki so omejeni s sistemskimi viri, predvsem z delovnim pomnilnikom, saj uporablja najbolj rigorozno strategijo in zasede (tako ob izvajanju operacij kot mirovanju) daleč najmanj delovnega pomnilnika.
 
 \section{Zaključek}
 Izbira SUPB-ja bo še naprej ostala primarno odvisna od kompetenc naročnika-izvajalca, vendar se vseeno zdi, da ima vsaka podatkovna baza svoje prednosti in slabosti, ki niso nujno povezane (samo) z golo performanco.
