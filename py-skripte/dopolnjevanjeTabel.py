@@ -1,3 +1,5 @@
+# skripta je bila uporabljena za dopolnjevanje .csv datotek, ki se jih je potem vneslo v podatkovno bazo
+
 import csv
 import random
 

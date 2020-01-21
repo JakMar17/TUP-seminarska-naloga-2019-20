@@ -608,7 +608,6 @@ td_mssql = ["MS SQL brisanje"]
 
 def testiraj(x):
     for i in range(x):
-        print("tukaj")
         td_mssql.append(izprazniBazo(mssql_cursor, mssql_connection, dobiImenaTabel(mssql_cursor, mssql_query)))
         td_mysql.append(izprazniBazo(mysql_cursor, mysql_connection, dobiImenaTabel(mysql_cursor, mysql_query)))
         td_postgres.append(izprazniBazo(postgres_cursor, postgres_connection, dobiImenaTabel(postgres_cursor, postgres_query)))
